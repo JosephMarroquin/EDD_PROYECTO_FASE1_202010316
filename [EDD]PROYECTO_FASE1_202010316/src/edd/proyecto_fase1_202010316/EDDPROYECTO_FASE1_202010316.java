@@ -5,8 +5,21 @@
  */
 package edd.proyecto_fase1_202010316;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import javax.swing.JFileChooser;
+
+//Librerias JSON.SIMPLE 1.1.1
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.json.simple.JSONArray;
+
+import org.json.JSONObject;
 
 /**
  *
@@ -98,7 +111,7 @@ public class EDDPROYECTO_FASE1_202010316 {
 
                 switch(opcion){
                     case "a":
-                        System.out.println("opcion a");
+                        cargaMasiva();
                         break;
                     case "b":
                         System.out.println("opcion b");
@@ -114,6 +127,66 @@ public class EDDPROYECTO_FASE1_202010316 {
                 System.out.println("Opcion Invalida");
                 sn.next();
             }
+            
+        }
+    }
+    
+    public static void cargaMasiva(){
+        String path;
+        JFileChooser fc = new JFileChooser();
+        int respuesta = fc.showOpenDialog(fc);
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            path=String.valueOf(fc.getSelectedFile()); 
+            
+            //LECTURA DEL JSON GUARDANDOLO EN UN STRING  
+            String contenidoJSON = "";
+            try(BufferedReader br = new BufferedReader(new FileReader(path))){
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    contenidoJSON += linea;
+                }                
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+            
+            //CONTANDO EL NUMERO TOTAL DE CLIENTES EN EL JSON CARGADO
+            int totalCharacters = 0;
+            char temp;
+            for (int i = 0; i < contenidoJSON.length(); i++) {
+                temp = contenidoJSON.charAt(i);
+                if (temp == '}')
+                    totalCharacters++;
+            }
+            int ntotalClientes=totalCharacters-1;
+            System.out.println("Total de clientes: "+ntotalClientes);
+
+            
+            //EXTRACCION DEL JSON EN EL STRING
+            
+            System.out.println(contenidoJSON);
+            
+            for(int i=1;i<=ntotalClientes;i++){
+                String nCliente="Cliente"+i;
+                System.out.println("--------------------------------------------");
+                JSONObject objetoJson = new JSONObject(contenidoJSON);
+                JSONObject contenidoCliente = objetoJson.getJSONObject(nCliente);
+                System.out.println(contenidoCliente);
+                int id_cliente=contenidoCliente.getInt("id_cliente");
+                System.out.println(id_cliente);
+                String nombre=contenidoCliente.getString("nombre_cliente");
+                System.out.println(nombre);
+                int img_color=contenidoCliente.getInt("img_color");
+                System.out.println(img_color);
+                int img_bw=contenidoCliente.getInt("img_bw");
+                System.out.println(img_bw);
+            }
+            
+            
+            
+            
             
         }
     }
