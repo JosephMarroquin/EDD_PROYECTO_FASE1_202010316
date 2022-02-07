@@ -26,7 +26,9 @@ import org.json.JSONObject;
  * @author josep
  */
 public class EDDPROYECTO_FASE1_202010316 {
-
+    
+    private static ColaRecepcion cola_recepcion=new ColaRecepcion();
+    
     /**
      * @param args the command line arguments
      */
@@ -59,9 +61,10 @@ public class EDDPROYECTO_FASE1_202010316 {
                         break;
                     case 2:
                         System.out.println("opcion 2");
+                        pruebCola();
                         break;
                     case 3:
-                        System.out.println("opcion 3");
+                        System.out.println("opcion 3");                        
                         break;
                     case 4:
                         System.out.println("opcion 4");
@@ -168,7 +171,12 @@ public class EDDPROYECTO_FASE1_202010316 {
             
             System.out.println(contenidoJSON);
             
+            
+            
             for(int i=1;i<=ntotalClientes;i++){
+                
+                //Insertar clientes en nuestra Cola Recepcion
+                
                 String nCliente="Cliente"+i;
                 System.out.println("--------------------------------------------");
                 JSONObject objetoJson = new JSONObject(contenidoJSON);
@@ -176,12 +184,16 @@ public class EDDPROYECTO_FASE1_202010316 {
                 System.out.println(contenidoCliente);
                 int id_cliente=contenidoCliente.getInt("id_cliente");
                 System.out.println(id_cliente);
-                String nombre=contenidoCliente.getString("nombre_cliente");
-                System.out.println(nombre);
+                String nombre_cliente=contenidoCliente.getString("nombre_cliente");
+                System.out.println(nombre_cliente);
                 int img_color=contenidoCliente.getInt("img_color");
                 System.out.println(img_color);
                 int img_bw=contenidoCliente.getInt("img_bw");
                 System.out.println(img_bw);
+                
+                Clientes cl=new Clientes(nCliente,id_cliente,nombre_cliente,img_color,img_bw);
+                cola_recepcion.Insertar(cl);
+                
             }
             
             
@@ -189,6 +201,21 @@ public class EDDPROYECTO_FASE1_202010316 {
             
             
         }
+    }
+    
+    
+    public static void pruebCola(){
+        
+        if (!cola_recepcion.ColaVacia()){
+            cola_recepcion.MostrarContenido();
+            cola_recepcion.Extraer();
+        } else{
+            System.out.println("-- Cola Recepcion Vacia --");
+        }
+        
+        
+        
+        
     }
     
 }
