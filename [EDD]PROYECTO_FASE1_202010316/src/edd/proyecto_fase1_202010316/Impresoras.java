@@ -9,14 +9,16 @@ package edd.proyecto_fase1_202010316;
  *
  * @author josep
  */
-public class Ventanillas {
+public class Impresoras {
     
-    int nVentanilla;
-    String estado;
+    int id_cliente;
+    int img_color;
+    int img_bw;
     
-    public Ventanillas(int _nVentanilla){
-        this.nVentanilla=_nVentanilla;
-        this.estado="Disponible";
+    public Impresoras(int _id_cliente, int _img_color, int _img_bw){
+        this.id_cliente=_id_cliente;
+        this.img_color=_img_color;
+        this.img_bw=_img_bw;
     }
     
 }

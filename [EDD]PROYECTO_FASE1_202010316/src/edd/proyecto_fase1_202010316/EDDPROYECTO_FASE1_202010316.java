@@ -28,6 +28,9 @@ import org.json.JSONObject;
 public class EDDPROYECTO_FASE1_202010316 {
     
     private static ColaRecepcion cola_recepcion=new ColaRecepcion();
+    private static ListaVentanillas lista_ventanillas=new ListaVentanillas();
+    private static PilaImg pila_imagenes=new PilaImg();
+    private static ListaClientesAtendidos lista_clienteAtendido=new ListaClientesAtendidos();
     
     /**
      * @param args the command line arguments
@@ -62,12 +65,27 @@ public class EDDPROYECTO_FASE1_202010316 {
                     case 2:
                         System.out.println("opcion 2");
                         pruebCola();
+                        pruebaPila();
                         break;
                     case 3:
-                        System.out.println("opcion 3");                        
+                        System.out.println("opcion 3");
+                        ClientesAtendidos as=new ClientesAtendidos("Juan",2,3,56);
+                        ClientesAtendidos as2=new ClientesAtendidos("Pedrop",3,43,256);
+                        ClientesAtendidos as3=new ClientesAtendidos("PEPE",52,73,856);
+                        lista_clienteAtendido.InsertarClienteAtendido(as);
+                        lista_clienteAtendido.InsertarClienteAtendido(as2);
+                        lista_clienteAtendido.InsertarClienteAtendido(as3);       
+                        lista_clienteAtendido.Mostrar_clienteAtendido();
+                        lista_ventanillas.Mostrar_ventanilla();
                         break;
                     case 4:
                         System.out.println("opcion 4");
+                        Imagenes img=new Imagenes(1,2,3);
+                        Imagenes img2=new Imagenes(44,32,32);
+                        Imagenes img3=new Imagenes(31,62,83);
+                        pila_imagenes.InsertarPilaImg(img);
+                        pila_imagenes.InsertarPilaImg(img2);
+                        pila_imagenes.InsertarPilaImg(img3);
                         break;
                     case 5:
                         System.out.println("--------DATOS DEL ESTUDIANTE--------");
@@ -117,7 +135,10 @@ public class EDDPROYECTO_FASE1_202010316 {
                         cargaMasiva();
                         break;
                     case "b":
-                        System.out.println("opcion b");
+                        Scanner n = new Scanner (System.in);
+                        System.out.println("Ingrese el numero de ventanillas: ");
+                        int totalVentanas=n.nextInt();
+                        cargarVentanillas(totalVentanas);
                         break;
                     case "c":
                         salir=true;
@@ -196,14 +217,9 @@ public class EDDPROYECTO_FASE1_202010316 {
                 
             }
             
-            
-            
-            
-            
         }
     }
-    
-    
+   
     public static void pruebCola(){
         
         if (!cola_recepcion.ColaVacia()){
@@ -211,10 +227,26 @@ public class EDDPROYECTO_FASE1_202010316 {
             cola_recepcion.Extraer();
         } else{
             System.out.println("-- Cola Recepcion Vacia --");
+        }     
+        
+    }
+    
+    //Cargar el numero ded ventanillas a su lista simple enlazada
+    public static void cargarVentanillas(int nVentanas){
+        for(int i=1;i<=nVentanas;i++){
+            Ventanillas v1=new Ventanillas(i);
+            lista_ventanillas.InsertarVentanilla(v1);
         }
+    }
+    
+    public static void pruebaPila(){
         
-        
-        
+        if (!pila_imagenes.PilaVacia()){
+            pila_imagenes.MostrarPilaImg();
+            pila_imagenes.ExtraerPilaImg();
+        } else{
+            System.out.println("-- Pila Img Vacia --");
+        }     
         
     }
     

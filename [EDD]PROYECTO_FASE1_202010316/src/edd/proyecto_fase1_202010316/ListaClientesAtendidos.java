@@ -9,15 +9,15 @@ package edd.proyecto_fase1_202010316;
  *
  * @author josep
  */
-public class ListaVentanillas {
+public class ListaClientesAtendidos {
     
     private Nodo cabeza;
     
     public class Nodo{
-        public Ventanillas ventanilla;
+        public ClientesAtendidos cliente_atendido;
         public Nodo next=null;
-        public Nodo(Ventanillas _ventanilla){
-            this.ventanilla=_ventanilla;
+        public Nodo(ClientesAtendidos _cliente_atendido){
+            this.cliente_atendido=_cliente_atendido;
         }
     }
     
@@ -31,23 +31,25 @@ public class ListaVentanillas {
     }
     
     //INGRESO DE DATOS
-    public void InsertarVentanilla(Ventanillas _ventanilla){
-        Nodo nuevo_nodo=new Nodo(_ventanilla);
+    public void InsertarClienteAtendido(ClientesAtendidos _clientes_atendidos){
+        Nodo nuevo_nodo=new Nodo(_clientes_atendidos);
         nuevo_nodo.next=cabeza;
         cabeza=nuevo_nodo;
     }
     
+    
     //Mostar contenido de la lista
     
-    public void Mostrar_ventanilla(){
+    public void Mostrar_clienteAtendido(){
         Nodo aux=cabeza;
         while(aux!=null){
             System.out.println("-------------------------");
-            System.out.println(aux.ventanilla.nVentanilla);
-            System.out.println(aux.ventanilla.estado);
+            System.out.println(aux.cliente_atendido.nombre_cliente);
+            System.out.println(aux.cliente_atendido.ventanilla_atendida);
+            System.out.println(aux.cliente_atendido.imagenes_impresas);
+            System.out.println(aux.cliente_atendido.total_pasos);
             aux=aux.next;
         }     
     }
-   
     
 }
