@@ -234,7 +234,7 @@ public class EDDPROYECTO_FASE1_202010316 {
     //Cargar el numero ded ventanillas a su lista simple enlazada
     public static void cargarVentanillas(int nVentanas){
         for(int i=1;i<=nVentanas;i++){
-            Ventanillas v1=new Ventanillas(i);
+            Ventanillas v1=new Ventanillas(i,1+i);
             lista_ventanillas.InsertarVentanilla(v1);
         }
     }

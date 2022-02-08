@@ -44,6 +44,7 @@ public class ListaVentanillas {
         while(aux!=null){
             System.out.println("-------------------------");
             System.out.println(aux.ventanilla.nVentanilla);
+            System.out.println(aux.ventanilla.id_cliente);
             System.out.println(aux.ventanilla.estado);
             aux=aux.next;
         }     

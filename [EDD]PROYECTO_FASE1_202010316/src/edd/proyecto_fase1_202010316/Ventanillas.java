@@ -12,10 +12,12 @@ package edd.proyecto_fase1_202010316;
 public class Ventanillas {
     
     int nVentanilla;
+    int id_cliente;
     String estado;
     
-    public Ventanillas(int _nVentanilla){
+    public Ventanillas(int _nVentanilla, int _id_cliente){
         this.nVentanilla=_nVentanilla;
+        this.id_cliente=_id_cliente;
         this.estado="Disponible";
     }
     
