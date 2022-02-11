@@ -11,6 +11,11 @@ package edd.proyecto_fase1_202010316;
  */
 public class ColaRecepcion {
     
+    //
+    public static String encabezadoCliente;
+    public static int idDelCliente;
+    //
+    
     private NodoRecepcion inicioCola, finalCola;
     String Cola="";
     
@@ -71,6 +76,22 @@ public class ColaRecepcion {
             System.out.println(recorrido.informacion.nombre_cliente);
             System.out.println(recorrido.informacion.img_color);
             System.out.println(recorrido.informacion.img_bw);
+            recorrido=recorrido.siguiente;
+        }
+    }
+    
+    //Saber que cliente estoy atendiendo
+    public void MostrarEncabezadoCliente(){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.atendiendo=="no"){
+                encabezadoCliente=recorrido.informacion.encabezado;
+                idDelCliente=recorrido.informacion.id_cliente;
+                recorrido.informacion.atendiendo="si";
+                break;
+            } 
+            
             recorrido=recorrido.siguiente;
         }
     }

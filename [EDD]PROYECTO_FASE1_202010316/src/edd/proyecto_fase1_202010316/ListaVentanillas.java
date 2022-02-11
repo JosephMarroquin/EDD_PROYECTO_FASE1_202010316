@@ -11,6 +11,10 @@ package edd.proyecto_fase1_202010316;
  */
 public class ListaVentanillas {
     
+    //
+    public static int numVentana;
+    //
+    
     private Nodo cabeza;
     
     public class Nodo{
@@ -33,8 +37,16 @@ public class ListaVentanillas {
     //INGRESO DE DATOS
     public void InsertarVentanilla(Ventanillas _ventanilla){
         Nodo nuevo_nodo=new Nodo(_ventanilla);
-        nuevo_nodo.next=cabeza;
-        cabeza=nuevo_nodo;
+        if(cabeza == null){
+            cabeza = nuevo_nodo;
+        }
+        else{
+            Nodo aux = cabeza;
+            while(aux.next != null){
+                aux=aux.next;
+            }
+            aux.next = nuevo_nodo;
+        }
     }
     
     //Mostar contenido de la lista
@@ -46,6 +58,23 @@ public class ListaVentanillas {
             System.out.println(aux.ventanilla.nVentanilla);
             System.out.println(aux.ventanilla.id_cliente);
             System.out.println(aux.ventanilla.estado);
+            aux=aux.next;
+        }     
+    }
+    
+    //INGRESO DEL CLIENTE A LAS VENTANILLAS
+    public void ingresarClienteVentana(String encabezadoCliente, int idCliente){
+        Nodo aux=cabeza;
+        while(aux!=null){
+            
+            if(aux.ventanilla.estado=="Disponible"){
+                aux.ventanilla.estado="Ocupado"; //Se cambia el estado de la ventanilla a ocupado
+                numVentana=aux.ventanilla.nVentanilla; //Se guarda el numero de ventanilla que lo atendio  
+                aux.ventanilla.id_cliente=idCliente; //La ventanilla guarda que cliente esta atendiendo
+                System.out.println("El "+encabezadoCliente+" ingresa a la ventanilla "+numVentana); //Se imprime en consola N cliente entro a N ventana
+                break;
+            }
+            
             aux=aux.next;
         }     
     }

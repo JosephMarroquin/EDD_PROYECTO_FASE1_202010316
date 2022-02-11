@@ -21,6 +21,9 @@ import org.json.simple.JSONArray;
 
 import org.json.JSONObject;
 
+//
+//
+
 /**
  *
  * @author josep
@@ -31,6 +34,11 @@ public class EDDPROYECTO_FASE1_202010316 {
     private static ListaVentanillas lista_ventanillas=new ListaVentanillas();
     private static PilaImg pila_imagenes=new PilaImg();
     private static ListaClientesAtendidos lista_clienteAtendido=new ListaClientesAtendidos();
+    private static ColaImpresion cola_impresion=new ColaImpresion();
+    private static ListaDeEspera lista_espera=new ListaDeEspera();
+    
+    private static int contador_pasos_generales=1;
+    private static int total_de_ventanillas;
     
     /**
      * @param args the command line arguments
@@ -63,20 +71,37 @@ public class EDDPROYECTO_FASE1_202010316 {
                         parametrosIniciales();
                         break;
                     case 2:
-                        System.out.println("opcion 2");
-                        pruebCola();
-                        pruebaPila();
+                        System.out.println("------------------PASO "+contador_pasos_generales+"------------------");
+                        contador_pasos_generales+=1;
+                        System.out.println("------------------------------------------");
+                        EjecutarPaso();
                         break;
                     case 3:
-                        System.out.println("opcion 3");
-                        ClientesAtendidos as=new ClientesAtendidos("Juan",2,3,56);
-                        ClientesAtendidos as2=new ClientesAtendidos("Pedrop",3,43,256);
-                        ClientesAtendidos as3=new ClientesAtendidos("PEPE",52,73,856);
-                        lista_clienteAtendido.InsertarClienteAtendido(as);
-                        lista_clienteAtendido.InsertarClienteAtendido(as2);
-                        lista_clienteAtendido.InsertarClienteAtendido(as3);       
-                        lista_clienteAtendido.Mostrar_clienteAtendido();
-                        lista_ventanillas.Mostrar_ventanilla();
+                        ImagenPendiente imgp1=new ImagenPendiente("Color");
+                        ImagenPendiente imgp2=new ImagenPendiente("Blanco y Negro");
+                        ImagenPendiente imgp3=new ImagenPendiente("Color");
+                        
+                        ClientesEspera cp1=new ClientesEspera("Clietnte2",2,"Juan",5);
+                        ClientesEspera cp2=new ClientesEspera("Clietnte3",3,"Pedro",6);
+                        ClientesEspera cp3=new ClientesEspera("Clietnte4",4,"Alex",8);
+                        ClientesEspera cp4=new ClientesEspera("Clietnte5",5,"Pepe",9);
+                        lista_espera.IngresarListaEspera(cp1);
+                        lista_espera.IngresarListaEspera(cp2);
+                        lista_espera.IngresarListaEspera(cp3);
+                        lista_espera.IngresarListaEspera(cp4);
+                        
+                        ClientesEspera gg=new ClientesEspera("",0,"",0);
+                        gg=lista_espera.BuscarIdClienteEspera(2);
+                        gg.ListaImgPendiente.Insertar_ImagenPendiente(imgp1);
+                        gg.ListaImgPendiente.Insertar_ImagenPendiente(imgp2);
+                        gg.ListaImgPendiente.MostrarContenido_ImagenPendiente();
+                        
+                        ClientesEspera gg2=new ClientesEspera("",0,"",0);
+                        gg2=lista_espera.BuscarIdClienteEspera(3);
+                        gg2.ListaImgPendiente.Insertar_ImagenPendiente(imgp3);
+                        gg2.ListaImgPendiente.MostrarContenido_ImagenPendiente();
+                        
+                        
                         break;
                     case 4:
                         System.out.println("opcion 4");
@@ -139,6 +164,7 @@ public class EDDPROYECTO_FASE1_202010316 {
                         System.out.println("Ingrese el numero de ventanillas: ");
                         int totalVentanas=n.nextInt();
                         cargarVentanillas(totalVentanas);
+                        total_de_ventanillas=totalVentanas;
                         break;
                     case "c":
                         salir=true;
@@ -234,7 +260,7 @@ public class EDDPROYECTO_FASE1_202010316 {
     //Cargar el numero ded ventanillas a su lista simple enlazada
     public static void cargarVentanillas(int nVentanas){
         for(int i=1;i<=nVentanas;i++){
-            Ventanillas v1=new Ventanillas(i,1+i);
+            Ventanillas v1=new Ventanillas(i);
             lista_ventanillas.InsertarVentanilla(v1);
         }
     }
@@ -247,6 +273,20 @@ public class EDDPROYECTO_FASE1_202010316 {
         } else{
             System.out.println("-- Pila Img Vacia --");
         }     
+        
+    }
+    
+    
+    //ALGORITMO PARA EJECUTAR LOS PASOS
+        
+    private static void EjecutarPaso(){
+        
+        
+        cola_recepcion.MostrarEncabezadoCliente(); //Saber que cliente estoy atendiendo
+        String encabezadoCliente=ColaRecepcion.encabezadoCliente; //Saber que cliente estoy atendiendo
+        int idDelCliente=ColaRecepcion.idDelCliente; //Saber que cliente estoy atendiendo
+        
+        lista_ventanillas.ingresarClienteVentana(encabezadoCliente,idDelCliente);//INGRESO DEL CLIENTE A LAS VENTANILLAS
         
     }
     

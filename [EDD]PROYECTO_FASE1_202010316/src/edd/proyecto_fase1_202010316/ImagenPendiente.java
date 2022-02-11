@@ -9,16 +9,12 @@ package edd.proyecto_fase1_202010316;
  *
  * @author josep
  */
-public class Ventanillas {
+public class ImagenPendiente {
     
-    int nVentanilla;
-    int id_cliente;
-    String estado;
+    String tipoIMG;
     
-    public Ventanillas(int _nVentanilla){
-        this.nVentanilla=_nVentanilla;
-        this.id_cliente=0;
-        this.estado="Disponible";
+    public ImagenPendiente(String _tipoIMG){
+        this.tipoIMG=_tipoIMG;
     }
     
 }

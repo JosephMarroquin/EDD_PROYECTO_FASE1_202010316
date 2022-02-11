@@ -9,22 +9,20 @@ package edd.proyecto_fase1_202010316;
  *
  * @author josep
  */
-public class Clientes {
+public class ClientesEspera {
     
     String encabezado;
     int id_cliente;
     String nombre_cliente;
-    int img_color;
-    int img_bw;
-    String atendiendo;
+    int ventanilla_atentida;
+    ListaImgPendiente ListaImgPendiente;
     
-    public Clientes(String _encabezado,int _id_cliente, String _nombre_cliente, int _img_color, int _img_bw){
+    public ClientesEspera(String _encabezado,int _id_cliente, String _nombre_cliente, int _ventanilla_atendida){
         this.encabezado=_encabezado;
         this.id_cliente=_id_cliente;
         this.nombre_cliente=_nombre_cliente;
-        this.img_color=_img_color;
-        this.img_bw=_img_bw;
-        this.atendiendo="no";
+        this.ventanilla_atentida=_ventanilla_atendida;
+        this.ListaImgPendiente=new ListaImgPendiente();
     }
     
 }
