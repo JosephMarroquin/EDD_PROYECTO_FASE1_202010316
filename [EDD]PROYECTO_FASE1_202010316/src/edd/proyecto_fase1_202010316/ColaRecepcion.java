@@ -66,6 +66,45 @@ public class ColaRecepcion {
         }
     }
     
+    //Metodo para eliminar un nodo de la cola
+    public Clientes EliminarClienteCola(Clientes cliente) {
+        if (!ColaVacia()) {
+            if (inicioCola == finalCola && cliente == inicioCola.informacion) {
+                inicioCola = finalCola = null;
+            } else if (cliente == inicioCola.informacion) {
+                inicioCola = inicioCola.siguiente;
+            } else {
+                NodoRecepcion anterior, temporal;
+                anterior = inicioCola;
+                temporal = inicioCola.siguiente;
+                while (temporal != null && temporal.informacion != cliente) {
+                    anterior = anterior.siguiente;
+                    temporal = temporal.siguiente;
+                }
+                if (temporal != null) {
+                    anterior.siguiente=temporal.siguiente;
+                    if (temporal == finalCola) {
+                        finalCola = anterior;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    //Buscar un nodo por el id
+    public Clientes BuscarNodoxId(int idCliente){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idCliente){
+                return recorrido.informacion;
+            }
+            recorrido=recorrido.siguiente;
+        }
+        return null;
+    }
+    
     //Metodo para mostrar el contenido de la cola
     public void MostrarContenido(){
         NodoRecepcion recorrido=inicioCola;
@@ -92,6 +131,92 @@ public class ColaRecepcion {
                 break;
             } 
             
+            recorrido=recorrido.siguiente;
+        }
+    }
+    
+    //Buscar id e informar cuantas imagenes a color tiene el cliente
+    public int CantidadImgColorRecepcion(int idClienteRecepcion){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idClienteRecepcion){
+                return recorrido.informacion.img_color;
+            } 
+            
+            recorrido=recorrido.siguiente;
+        }
+        return Integer.MAX_VALUE;
+    }
+    
+    //Buscar id e informar cuantas imagenes a blanco y negro tiene el cliente
+    public int CantidadImgBwRecepcion(int idClienteRecepcion){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idClienteRecepcion){
+                return recorrido.informacion.img_bw;
+            } 
+            
+            recorrido=recorrido.siguiente;
+        }
+        return Integer.MAX_VALUE;
+    }
+    
+    //Buscar id e informar encabezado
+    public String EncabezadoParaImg(int idClienteRecepcion){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idClienteRecepcion){
+                return recorrido.informacion.encabezado;
+            } 
+            
+            recorrido=recorrido.siguiente;
+        }
+        return null;
+    }
+    
+    //Buscar id e informar nombre del cliente
+    public String NombreParaImg(int idClienteRecepcion){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idClienteRecepcion){
+                return recorrido.informacion.nombre_cliente;
+            } 
+            
+            recorrido=recorrido.siguiente;
+        }
+        return null;
+    }
+    
+    //Quitarle una imagen a color al cliente
+    public void QuitarImagenColor(int idClienteRecepcion){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idClienteRecepcion){
+                if(recorrido.informacion.img_color!=0){
+                    recorrido.informacion.img_color=recorrido.informacion.img_color-1;
+                    break;
+                }
+            }         
+            recorrido=recorrido.siguiente;
+        }
+    }
+    
+    //Quitarle una imagen blanco y negro al cliente
+    public void QuitarImagenBw(int idClienteRecepcion){
+        NodoRecepcion recorrido=inicioCola;
+        while(recorrido!=null){
+            
+            if(recorrido.informacion.id_cliente==idClienteRecepcion){
+                if(recorrido.informacion.img_bw!=0){
+                    recorrido.informacion.img_bw=recorrido.informacion.img_bw-1;
+                    break;
+                }
+            }         
             recorrido=recorrido.siguiente;
         }
     }

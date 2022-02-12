@@ -74,8 +74,8 @@ public class ColaImpresion {
         while(recorrido!=null){
             System.out.println("-------------------------");
             System.out.println(recorrido.impresora.id_cliente);
-            System.out.println(recorrido.impresora.img_color);
-            System.out.println(recorrido.impresora.img_bw);
+            System.out.println(recorrido.impresora.tipoImg);
+            System.out.println(recorrido.impresora.numVentana);
             recorrido=recorrido.siguiente;
         }
     }

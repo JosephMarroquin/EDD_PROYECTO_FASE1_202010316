@@ -11,6 +11,8 @@ package edd.proyecto_fase1_202010316;
  */
 public class PilaImg {
     
+    public static int contarImgPila;
+    
     public class Nodo{
         public Imagenes informacion;
         public Nodo siguiente=null;
@@ -65,10 +67,29 @@ public class PilaImg {
         while(reco!=null){
             System.out.println("-------------------------");
             System.out.println(reco.informacion.id_cliente);
-            System.out.println(reco.informacion.img_color);
-            System.out.println(reco.informacion.img_bw);
+            System.out.println(reco.informacion.tipoIMG);
             reco=reco.siguiente;
         }
+    }
+    
+    //contar cuantas imagenes tengo en la pila
+    public void ContarPilaImg(){
+        Nodo reco=raiz;
+        contarImgPila=0;
+        while(reco!=null){
+            contarImgPila=contarImgPila+1;
+            reco=reco.siguiente;
+        }
+    }
+    
+    
+    //Metodo para mostrar tipo de imagen a imprimir
+    public String MostrarTipoImg(){
+        Nodo reco=raiz;
+        if(reco!=null){
+            return reco.informacion.tipoIMG;
+        }
+        return null;
     }
     
 }

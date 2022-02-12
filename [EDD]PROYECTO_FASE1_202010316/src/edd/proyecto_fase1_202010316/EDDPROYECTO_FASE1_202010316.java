@@ -32,7 +32,7 @@ public class EDDPROYECTO_FASE1_202010316 {
     
     private static ColaRecepcion cola_recepcion=new ColaRecepcion();
     private static ListaVentanillas lista_ventanillas=new ListaVentanillas();
-    private static PilaImg pila_imagenes=new PilaImg();
+    private static ListaImgPila lista_img_pila=new ListaImgPila();
     private static ListaClientesAtendidos lista_clienteAtendido=new ListaClientesAtendidos();
     private static ColaImpresion cola_impresion=new ColaImpresion();
     private static ListaDeEspera lista_espera=new ListaDeEspera();
@@ -74,9 +74,21 @@ public class EDDPROYECTO_FASE1_202010316 {
                         System.out.println("------------------PASO "+contador_pasos_generales+"------------------");
                         contador_pasos_generales+=1;
                         System.out.println("------------------------------------------");
+                        EntregarImagenVentana();
                         EjecutarPaso();
                         break;
                     case 3:
+                        cola_recepcion.MostrarContenido();
+                        System.out.println("------------------------");
+                        System.out.println("------------------------");
+                        System.out.println("------------------------");
+                        System.out.println("------------------------");
+                        System.out.println("------------------------");
+                        Clientes a=new Clientes("",0,"",0,0);
+                        a=cola_recepcion.BuscarNodoxId(2);
+                        cola_recepcion.EliminarClienteCola(a);
+                        cola_recepcion.MostrarContenido();
+                        /*
                         ImagenPendiente imgp1=new ImagenPendiente("Color");
                         ImagenPendiente imgp2=new ImagenPendiente("Blanco y Negro");
                         ImagenPendiente imgp3=new ImagenPendiente("Color");
@@ -100,17 +112,28 @@ public class EDDPROYECTO_FASE1_202010316 {
                         gg2=lista_espera.BuscarIdClienteEspera(3);
                         gg2.ListaImgPendiente.Insertar_ImagenPendiente(imgp3);
                         gg2.ListaImgPendiente.MostrarContenido_ImagenPendiente();
-                        
-                        
+                        */
                         break;
                     case 4:
-                        System.out.println("opcion 4");
-                        Imagenes img=new Imagenes(1,2,3);
-                        Imagenes img2=new Imagenes(44,32,32);
-                        Imagenes img3=new Imagenes(31,62,83);
-                        pila_imagenes.InsertarPilaImg(img);
-                        pila_imagenes.InsertarPilaImg(img2);
-                        pila_imagenes.InsertarPilaImg(img3);
+                        ImagenPorVentana img1=new ImagenPorVentana(1);
+                        ImagenPorVentana img2=new ImagenPorVentana(2);
+                        ImagenPorVentana img3=new ImagenPorVentana(3);
+                        ImagenPorVentana img4=new ImagenPorVentana(4);
+                        lista_img_pila.Insertar_ImagenPorVentana(img1);
+                        lista_img_pila.Insertar_ImagenPorVentana(img2);
+                        lista_img_pila.Insertar_ImagenPorVentana(img3);
+                        lista_img_pila.Insertar_ImagenPorVentana(img4);
+                        
+                        ImagenPorVentana im=new ImagenPorVentana(0);
+                        im=lista_img_pila.BuscarVentana(1);
+                        Imagenes cc=new Imagenes(2,"color");
+                        Imagenes cc2=new Imagenes(3,"color");
+                        im.pilaImagen.InsertarPilaImg(cc);
+                        im.pilaImagen.InsertarPilaImg(cc2);
+                        im.pilaImagen.MostrarPilaImg();
+                        im.pilaImagen.ContarPilaImg();
+                        im.pilaImagen.ExtraerPilaImg();
+                        im.pilaImagen.MostrarPilaImg();                        
                         break;
                     case 5:
                         System.out.println("--------DATOS DEL ESTUDIANTE--------");
@@ -262,32 +285,32 @@ public class EDDPROYECTO_FASE1_202010316 {
         for(int i=1;i<=nVentanas;i++){
             Ventanillas v1=new Ventanillas(i);
             lista_ventanillas.InsertarVentanilla(v1);
+            
+            ImagenPorVentana img1=new ImagenPorVentana(i);
+            lista_img_pila.Insertar_ImagenPorVentana(img1);
         }
     }
     
-    public static void pruebaPila(){
-        
-        if (!pila_imagenes.PilaVacia()){
-            pila_imagenes.MostrarPilaImg();
-            pila_imagenes.ExtraerPilaImg();
-        } else{
-            System.out.println("-- Pila Img Vacia --");
-        }     
-        
-    }
     
-    
+   
     //ALGORITMO PARA EJECUTAR LOS PASOS
         
-    private static void EjecutarPaso(){
+    public static void EjecutarPaso(){
         
-        
+        //---------------------------------------------------------------------------------------
         cola_recepcion.MostrarEncabezadoCliente(); //Saber que cliente estoy atendiendo
         String encabezadoCliente=ColaRecepcion.encabezadoCliente; //Saber que cliente estoy atendiendo
         int idDelCliente=ColaRecepcion.idDelCliente; //Saber que cliente estoy atendiendo
-        
         lista_ventanillas.ingresarClienteVentana(encabezadoCliente,idDelCliente);//INGRESO DEL CLIENTE A LAS VENTANILLAS
+        //---------------------------------------------------------------------------------------
         
+    }
+    
+    //Entrega de imagenes por el cliente a la ventanilla
+    public static void EntregarImagenVentana(){
+        
+        lista_ventanillas.ingresarImagenApila(cola_recepcion, lista_img_pila, cola_impresion, lista_espera);
+    
     }
     
 }

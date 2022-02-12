@@ -9,14 +9,14 @@ package edd.proyecto_fase1_202010316;
  *
  * @author josep
  */
-public class Imagenes {
+public class ImagenPorVentana {
     
-    int id_cliente;
-    String tipoIMG;
+    int numVentana;
+    PilaImg pilaImagen;
     
-    public Imagenes(int _id_cliente, String _tipoIMG){
-        this.id_cliente=_id_cliente;
-        this.tipoIMG=_tipoIMG;
+    public ImagenPorVentana(int _numVentana){
+        this.numVentana=_numVentana;
+        this.pilaImagen=new PilaImg();
     }
     
 }

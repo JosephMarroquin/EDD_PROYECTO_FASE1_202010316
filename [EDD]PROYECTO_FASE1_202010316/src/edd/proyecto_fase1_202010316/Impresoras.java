@@ -12,13 +12,13 @@ package edd.proyecto_fase1_202010316;
 public class Impresoras {
     
     int id_cliente;
-    int img_color;
-    int img_bw;
+    String tipoImg;
+    int numVentana;
     
-    public Impresoras(int _id_cliente, int _img_color, int _img_bw){
+    public Impresoras(int _id_cliente, String _tipoImg, int _numVentana){
         this.id_cliente=_id_cliente;
-        this.img_color=_img_color;
-        this.img_bw=_img_bw;
+        this.tipoImg=_tipoImg;
+        this.numVentana=_numVentana;
     }
     
 }

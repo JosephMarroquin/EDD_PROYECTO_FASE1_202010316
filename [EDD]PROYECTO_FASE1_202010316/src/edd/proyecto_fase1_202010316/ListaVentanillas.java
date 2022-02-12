@@ -69,14 +69,88 @@ public class ListaVentanillas {
             
             if(aux.ventanilla.estado=="Disponible"){
                 aux.ventanilla.estado="Ocupado"; //Se cambia el estado de la ventanilla a ocupado
-                numVentana=aux.ventanilla.nVentanilla; //Se guarda el numero de ventanilla que lo atendio  
                 aux.ventanilla.id_cliente=idCliente; //La ventanilla guarda que cliente esta atendiendo
-                System.out.println("El "+encabezadoCliente+" ingresa a la ventanilla "+numVentana); //Se imprime en consola N cliente entro a N ventana
+                System.out.println("El "+encabezadoCliente+" ingresa a la ventanilla "+aux.ventanilla.nVentanilla); //Se imprime en consola N cliente entro a N ventana
                 break;
             }
             
             aux=aux.next;
         }     
+    }
+    
+    //RECIBIR IMAGENES Y MANDARLOS A UNA PILA
+    
+    public void ingresarImagenApila(ColaRecepcion cola_recepcion, ListaImgPila lista_img_pila, ColaImpresion cola_impresion, ListaDeEspera lista_espera){
+        Nodo aux=cabeza;
+        while(aux!=null){
+            
+            if(aux.ventanilla.estado=="Ocupado"){
+                
+                //Mando a traer datos del cliente en recepcion
+                int imagenesAcolor=cola_recepcion.CantidadImgColorRecepcion(aux.ventanilla.id_cliente);
+                int imagenesAbw=cola_recepcion.CantidadImgBwRecepcion(aux.ventanilla.id_cliente);
+                String encabezado=cola_recepcion.EncabezadoParaImg(aux.ventanilla.id_cliente);
+                String nombreCliente=cola_recepcion.NombreParaImg(aux.ventanilla.id_cliente);
+                //
+                
+                if(imagenesAcolor!=0){
+                    System.out.println("La ventanilla "+aux.ventanilla.nVentanilla+" recibe una imagen a color del "+encabezado);
+                    cola_recepcion.QuitarImagenColor(aux.ventanilla.id_cliente);  
+                    
+                    //agregar imagen a la pila
+                    ImagenPorVentana imv=new ImagenPorVentana(0);
+                    imv=lista_img_pila.BuscarVentana(aux.ventanilla.nVentanilla);
+                    Imagenes cc=new Imagenes(aux.ventanilla.id_cliente,"color");
+                    imv.pilaImagen.InsertarPilaImg(cc);
+                }
+                else if(imagenesAcolor==0){
+                    if(imagenesAbw!=0){
+                        System.out.println("La ventanilla "+aux.ventanilla.nVentanilla+" recibe una imagen en blanco y negro del "+encabezado);
+                        cola_recepcion.QuitarImagenBw(aux.ventanilla.id_cliente);
+                        
+                        //agregar imagen a la pila
+                        ImagenPorVentana imv2=new ImagenPorVentana(0);
+                        imv2=lista_img_pila.BuscarVentana(aux.ventanilla.nVentanilla);
+                        Imagenes cc2=new Imagenes(aux.ventanilla.id_cliente,"blanco y negro");
+                        imv2.pilaImagen.InsertarPilaImg(cc2);
+                    }
+                    else if(imagenesAbw==0){
+                        System.out.println("El "+encabezado+" es atendido e ingresa a la lista de espera");
+                        System.out.println("La ventanilla "+aux.ventanilla.nVentanilla+" envía las imágenes del "+encabezado+" a sus respectivas colas de impresión");
+                        
+                        //INGRESAR CLIENTE A LISTA DE ESPERA
+                        ClientesEspera cle=new ClientesEspera(encabezado,aux.ventanilla.id_cliente,nombreCliente,aux.ventanilla.nVentanilla);
+                        lista_espera.IngresarListaEspera(cle);
+                        
+                        //SACO AL CLIENTE DE LA COLA
+                        Clientes sacarCliente=new Clientes("",0,"",0,0);
+                        sacarCliente=cola_recepcion.BuscarNodoxId(aux.ventanilla.id_cliente);
+                        cola_recepcion.EliminarClienteCola(sacarCliente);
+                        
+                        //Vaciar la pila de imagenes y mandarlos a la cola de impresion
+                        ImagenPorVentana imv3=new ImagenPorVentana(0);
+                        imv3=lista_img_pila.BuscarVentana(aux.ventanilla.nVentanilla);
+                        imv3.pilaImagen.ContarPilaImg();
+                        int totalImgEnPila=PilaImg.contarImgPila;
+                        for(int i=1;i<=totalImgEnPila;i++){
+                            //Mandar imagen a la cola de impresion
+                            String tipoImg=imv3.pilaImagen.MostrarTipoImg();
+                            Impresoras impre=new Impresoras(aux.ventanilla.id_cliente,tipoImg,aux.ventanilla.nVentanilla);
+                            cola_impresion.Insertar_ColaImpresion(impre);
+                            imv3.pilaImagen.ExtraerPilaImg();//Saco una imagen de la pila
+                        }
+                        
+                        //La ventana se encuentra disponible nuevamente 
+                        aux.ventanilla.id_cliente=0;
+                        aux.ventanilla.estado="Disponible";
+                        
+                        
+                    }                  
+                }                            
+            }
+            
+            aux=aux.next;
+        }   
     }
    
     
