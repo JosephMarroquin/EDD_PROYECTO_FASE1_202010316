@@ -76,6 +76,7 @@ public class EDDPROYECTO_FASE1_202010316 {
                         System.out.println("------------------------------------------");
                         EntregarImagenVentana();
                         EjecutarPaso();
+                        ImprimirImagen();
                         break;
                     case 3:
                         cola_recepcion.MostrarContenido();
@@ -311,6 +312,11 @@ public class EDDPROYECTO_FASE1_202010316 {
         
         lista_ventanillas.ingresarImagenApila(cola_recepcion, lista_img_pila, cola_impresion, lista_espera);
     
+    }
+    
+    //Imprimir Imagen y agregarla a la lista de espera
+    public static void ImprimirImagen(){
+        cola_impresion.ImprimirImg(cola_impresion, lista_espera);
     }
     
 }
