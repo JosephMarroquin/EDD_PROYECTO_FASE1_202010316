@@ -94,7 +94,7 @@ public class ListaVentanillas {
     
     //RECIBIR IMAGENES Y MANDARLOS A UNA PILA
     
-    public void ingresarImagenApila(ColaRecepcion cola_recepcion, ListaImgPila lista_img_pila, ColaImpresion cola_impresion, ListaDeEspera lista_espera){
+    public void ingresarImagenApila(ColaRecepcion cola_recepcion, ListaImgPila lista_img_pila, ColaImpresion cola_impresion, ColaImpresionBw cola_impresionBw, ListaDeEspera lista_espera){
         Nodo aux=cabeza;
         while(aux!=null){
             
@@ -146,12 +146,25 @@ public class ListaVentanillas {
                         imv3=lista_img_pila.BuscarVentana(aux.ventanilla.nVentanilla);
                         imv3.pilaImagen.ContarPilaImg();
                         int totalImgEnPila=PilaImg.contarImgPila;
+                        
                         for(int i=1;i<=totalImgEnPila;i++){
                             //Mandar imagen a la cola de impresion
                             String tipoImg=imv3.pilaImagen.MostrarTipoImg();
-                            Impresoras impre=new Impresoras(aux.ventanilla.id_cliente,tipoImg,aux.ventanilla.nVentanilla);
-                            cola_impresion.Insertar_ColaImpresion(impre);
-                            imv3.pilaImagen.ExtraerPilaImg();//Saco una imagen de la pila
+                            
+                            if(tipoImg=="color"){
+                                Impresoras impre=new Impresoras(aux.ventanilla.id_cliente,tipoImg,aux.ventanilla.nVentanilla);
+                                cola_impresion.Insertar_ColaImpresion(impre);
+                                imv3.pilaImagen.ExtraerPilaImg();//Saco una imagen de la pila   
+                            }
+                            else if(tipoImg=="blanco y negro"){
+                                ImpresoraBw impreBw=new ImpresoraBw(aux.ventanilla.id_cliente,tipoImg,aux.ventanilla.nVentanilla);
+                                cola_impresionBw.Insertar_ColaImpresionBw(impreBw);
+                                imv3.pilaImagen.ExtraerPilaImg();//Saco una imagen de la pila   
+                            }
+                            
+                            
+                            
+                            
                         }
                         
                         //La ventana se encuentra disponible nuevamente 

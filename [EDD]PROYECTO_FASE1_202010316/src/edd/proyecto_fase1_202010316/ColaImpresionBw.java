@@ -9,23 +9,19 @@ package edd.proyecto_fase1_202010316;
  *
  * @author josep
  */
-public class ColaImpresion {
-    
-    //
-    public static int ContadorColor;
-    //
+public class ColaImpresionBw {
     
     private Nodo inicioCola, finalCola;
     
     public class Nodo{
-        public Impresoras impresora;
+        public ImpresoraBw impresoraBw;
         public Nodo siguiente=null;
-        public Nodo(Impresoras _impresora){
-            this.impresora=_impresora;
+        public Nodo(ImpresoraBw _impresoraBw){
+            this.impresoraBw=_impresoraBw;
         }
     }
     
-    public ColaImpresion(){
+    public ColaImpresionBw(){
         inicioCola=null;
         finalCola=null;
         
@@ -41,9 +37,9 @@ public class ColaImpresion {
     }
     
     //Metodo para insertar a la cola
-    public void Insertar_ColaImpresion(Impresoras _impresora){
-        Nodo nuevo_nodo=new Nodo(_impresora);
-        nuevo_nodo.impresora=_impresora;
+    public void Insertar_ColaImpresionBw(ImpresoraBw _impresoraBw){
+        Nodo nuevo_nodo=new Nodo(_impresoraBw);
+        nuevo_nodo.impresoraBw=_impresoraBw;
         nuevo_nodo.siguiente=null;
         
         if (ColaVacia()){
@@ -57,9 +53,9 @@ public class ColaImpresion {
     }
     
     //Metodo para extraer de la cola
-    public Impresoras Extraer_ColaImpresion(){
+    public ImpresoraBw Extraer_ColaImpresionBw(){
         if (!ColaVacia()) {
-            Impresoras informacion=inicioCola.impresora;
+            ImpresoraBw informacion=inicioCola.impresoraBw;
             if(inicioCola==finalCola){
                 inicioCola=null;
                 finalCola=null;
@@ -77,38 +73,31 @@ public class ColaImpresion {
         Nodo recorrido=inicioCola;
         while(recorrido!=null){
             System.out.println("-------------------------");
-            System.out.println(recorrido.impresora.id_cliente);
-            System.out.println(recorrido.impresora.tipoImg);
-            System.out.println(recorrido.impresora.numVentana);
+            System.out.println(recorrido.impresoraBw.id_cliente);
+            System.out.println(recorrido.impresoraBw.tipoImg);
+            System.out.println(recorrido.impresoraBw.numVentana);
             recorrido=recorrido.siguiente;
         }
     }
     
     //Imprimir imagenes y entregarlas a su respectivo cliente
-    public void ImprimirImg(ColaImpresion cola_impresion, ListaDeEspera lista_espera){
+    public void ImprimirImgBw(ColaImpresionBw cola_impresionBw, ListaDeEspera lista_espera){
         Nodo recorrido=inicioCola;
         while(recorrido!=null){
             
-            if(recorrido.impresora.tipoImg=="color"){
-                ContadorColor=ContadorColor+1;
-                if(ContadorColor==2){
-                    ImagenPendiente imgp2=new ImagenPendiente(recorrido.impresora.tipoImg); 
-                    
-                    ClientesEspera clienteEspera2=new ClientesEspera("",0,"",0);
-                    clienteEspera2=lista_espera.BuscarIdClienteEspera(recorrido.impresora.id_cliente);//Encontrar a que cliente pertence la imagen
-                    clienteEspera2.ListaImgPendiente.Insertar_ImagenPendiente(imgp2);//Agregar imagen a la lista del cliente
-                    
-                    System.out.println("Se completa la impresion de una imagen a color y se le entrega al "+clienteEspera2.encabezado);
-                    
-                    cola_impresion.Extraer_ColaImpresion();//Saco la imagne de la cola de impresion
-                    
-                    ContadorColor=0;
-                    break;
-                }
+            if(recorrido.impresoraBw.tipoImg=="blanco y negro"){
+                ImagenPendiente imgp=new ImagenPendiente(recorrido.impresoraBw.tipoImg); 
+                
+                ClientesEspera clienteEspera=new ClientesEspera("",0,"",0);
+                clienteEspera=lista_espera.BuscarIdClienteEspera(recorrido.impresoraBw.id_cliente);//Encontrar a que cliente pertence la imagen
+                clienteEspera.ListaImgPendiente.Insertar_ImagenPendiente(imgp);//Agregar imagen a la lista del cliente
+                
+                System.out.println("Se completa la impresion de una imagen en blanco y negro y se le entrega al "+clienteEspera.encabezado);
+                
+                cola_impresionBw.Extraer_ColaImpresionBw();//Saco la imagne de la cola de impresion
                 break;
             }
-            
-            
+                 
             recorrido=recorrido.siguiente;
         }
     }

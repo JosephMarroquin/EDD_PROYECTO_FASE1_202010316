@@ -35,6 +35,7 @@ public class EDDPROYECTO_FASE1_202010316 {
     private static ListaImgPila lista_img_pila=new ListaImgPila();
     private static ListaClientesAtendidos lista_clienteAtendido=new ListaClientesAtendidos();
     private static ColaImpresion cola_impresion=new ColaImpresion();
+    private static ColaImpresionBw cola_impresionBw=new ColaImpresionBw();
     private static ListaDeEspera lista_espera=new ListaDeEspera();
     
     private static int contador_pasos_generales=1;
@@ -74,9 +75,9 @@ public class EDDPROYECTO_FASE1_202010316 {
                         System.out.println("------------------PASO "+contador_pasos_generales+"------------------");
                         contador_pasos_generales+=1;
                         System.out.println("------------------------------------------");
-                        EntregarImagenVentana();
-                        EjecutarPaso();
                         ImprimirImagen();
+                        EntregarImagenVentana();
+                        EjecutarPaso();                   
                         break;
                     case 3:
                         cola_recepcion.MostrarContenido();
@@ -310,13 +311,14 @@ public class EDDPROYECTO_FASE1_202010316 {
     //Entrega de imagenes por el cliente a la ventanilla
     public static void EntregarImagenVentana(){
         
-        lista_ventanillas.ingresarImagenApila(cola_recepcion, lista_img_pila, cola_impresion, lista_espera);
+        lista_ventanillas.ingresarImagenApila(cola_recepcion, lista_img_pila, cola_impresion, cola_impresionBw, lista_espera);
     
     }
     
     //Imprimir Imagen y agregarla a la lista de espera
     public static void ImprimirImagen(){
         cola_impresion.ImprimirImg(cola_impresion, lista_espera);
+        cola_impresionBw.ImprimirImgBw(cola_impresionBw, lista_espera);
     }
     
 }
