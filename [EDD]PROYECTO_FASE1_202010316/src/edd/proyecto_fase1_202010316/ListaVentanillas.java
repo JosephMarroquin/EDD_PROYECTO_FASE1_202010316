@@ -62,12 +62,26 @@ public class ListaVentanillas {
         }     
     }
     
+    //Saber si hay ventanillas disponibles
+    
+    public String HayVentanasDisp(){
+        Nodo aux=cabeza;
+        while(aux!=null){
+            if(aux.ventanilla.estado=="Disponible"){
+                String ss="si";
+                return ss;
+            }
+            aux=aux.next;
+        }     
+        return null;
+    }
+    
     //INGRESO DEL CLIENTE A LAS VENTANILLAS
     public void ingresarClienteVentana(String encabezadoCliente, int idCliente){
         Nodo aux=cabeza;
         while(aux!=null){
             
-            if(aux.ventanilla.estado=="Disponible"){
+            if(aux.ventanilla.estado=="Disponible" && ColaRecepcion.encabezadoCliente!=""){
                 aux.ventanilla.estado="Ocupado"; //Se cambia el estado de la ventanilla a ocupado
                 aux.ventanilla.id_cliente=idCliente; //La ventanilla guarda que cliente esta atendiendo
                 System.out.println("El "+encabezadoCliente+" ingresa a la ventanilla "+aux.ventanilla.nVentanilla); //Se imprime en consola N cliente entro a N ventana

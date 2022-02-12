@@ -298,7 +298,7 @@ public class EDDPROYECTO_FASE1_202010316 {
     public static void EjecutarPaso(){
         
         //---------------------------------------------------------------------------------------
-        cola_recepcion.MostrarEncabezadoCliente(); //Saber que cliente estoy atendiendo
+        cola_recepcion.MostrarEncabezadoCliente(lista_ventanillas); //Saber que cliente estoy atendiendo
         String encabezadoCliente=ColaRecepcion.encabezadoCliente; //Saber que cliente estoy atendiendo
         int idDelCliente=ColaRecepcion.idDelCliente; //Saber que cliente estoy atendiendo
         lista_ventanillas.ingresarClienteVentana(encabezadoCliente,idDelCliente);//INGRESO DEL CLIENTE A LAS VENTANILLAS

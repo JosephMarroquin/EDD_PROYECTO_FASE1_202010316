@@ -120,16 +120,21 @@ public class ColaRecepcion {
     }
     
     //Saber que cliente estoy atendiendo
-    public void MostrarEncabezadoCliente(){
+    public void MostrarEncabezadoCliente(ListaVentanillas lista_ventanillas){
         NodoRecepcion recorrido=inicioCola;
         while(recorrido!=null){
             
             if(recorrido.informacion.atendiendo=="no"){
-                encabezadoCliente=recorrido.informacion.encabezado;
-                idDelCliente=recorrido.informacion.id_cliente;
-                recorrido.informacion.atendiendo="si";
-                break;
-            } 
+                if(lista_ventanillas.HayVentanasDisp()=="si"){
+                    encabezadoCliente=recorrido.informacion.encabezado;
+                    idDelCliente=recorrido.informacion.id_cliente;
+                    recorrido.informacion.atendiendo="si";
+                    break;
+                }          
+            } else{
+                encabezadoCliente="";
+                idDelCliente=0;
+            }
             
             recorrido=recorrido.siguiente;
         }
