@@ -75,21 +75,13 @@ public class EDDPROYECTO_FASE1_202010316 {
                         System.out.println("------------------PASO "+contador_pasos_generales+"------------------");
                         contador_pasos_generales+=1;
                         System.out.println("------------------------------------------");
+                        VerificarColaImpresion();
                         ImprimirImagen();
                         EntregarImagenVentana();
                         EjecutarPaso();                   
                         break;
                     case 3:
-                        cola_recepcion.MostrarContenido();
-                        System.out.println("------------------------");
-                        System.out.println("------------------------");
-                        System.out.println("------------------------");
-                        System.out.println("------------------------");
-                        System.out.println("------------------------");
-                        Clientes a=new Clientes("",0,"",0,0);
-                        a=cola_recepcion.BuscarNodoxId(2);
-                        cola_recepcion.EliminarClienteCola(a);
-                        cola_recepcion.MostrarContenido();
+                        lista_espera.MostrarListaEspera();
                         /*
                         ImagenPendiente imgp1=new ImagenPendiente("Color");
                         ImagenPendiente imgp2=new ImagenPendiente("Blanco y Negro");
@@ -319,6 +311,11 @@ public class EDDPROYECTO_FASE1_202010316 {
     public static void ImprimirImagen(){
         cola_impresion.ImprimirImg(cola_impresion, lista_espera);
         cola_impresionBw.ImprimirImgBw(cola_impresionBw, lista_espera);
+    }
+    
+    //verificar que el cliente tenga imagenes en cola de impresion
+    public static void VerificarColaImpresion(){
+        lista_espera.VerificacionImagenes(cola_impresion, cola_impresionBw, lista_clienteAtendido, lista_espera);
     }
     
 }

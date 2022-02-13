@@ -60,4 +60,50 @@ public class ListaImgPendiente {
         }
     }
     
+    //Contar el total de imagenes del cliente
+    public int ContarImagenes(){
+        Nodo recorrido=inicio;
+        int contador=0;
+        while(recorrido!=null){
+            contador=contador+1;
+            recorrido=recorrido.siguiente;
+        }
+        if(recorrido==null){
+            return contador;
+        }      
+        return Integer.MAX_VALUE;
+    }
+    
+    //Contar el total de imagenes a color
+    public int ContarImagenesColor(){
+        Nodo recorrido=inicio;
+        int contador=0;
+        while(recorrido!=null){
+            if(recorrido.imagenPendiente.tipoIMG=="color"){
+                contador=contador+1;
+            }      
+            recorrido=recorrido.siguiente;
+        }
+        if(recorrido==null){
+            return contador;
+        }      
+        return Integer.MAX_VALUE;
+    }
+    
+    //Contar el total de imagenes en blanco y negro
+    public int ContarImagenesBw(){
+        Nodo recorrido=inicio;
+        int contador=0;
+        while(recorrido!=null){
+            if(recorrido.imagenPendiente.tipoIMG=="blanco y negro"){
+                contador=contador+1;
+            }      
+            recorrido=recorrido.siguiente;
+        }
+        if(recorrido==null){
+            return contador;
+        }      
+        return Integer.MAX_VALUE;
+    }
+    
 }

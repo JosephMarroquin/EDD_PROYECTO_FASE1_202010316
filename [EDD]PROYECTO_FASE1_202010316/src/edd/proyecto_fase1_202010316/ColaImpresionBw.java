@@ -80,6 +80,20 @@ public class ColaImpresionBw {
         }
     }
     
+    
+    //Verificar si en la cola existe la imagen de un cliente
+    public String BuscarClienteBw(int id_cliente){
+        Nodo recorrido=inicioCola;
+        while(recorrido!=null){
+            if(id_cliente==recorrido.impresoraBw.id_cliente){
+                String respuesta="si";
+                return respuesta;
+            }
+            recorrido=recorrido.siguiente;
+        }
+        return null;
+    }
+    
     //Imprimir imagenes y entregarlas a su respectivo cliente
     public void ImprimirImgBw(ColaImpresionBw cola_impresionBw, ListaDeEspera lista_espera){
         Nodo recorrido=inicioCola;

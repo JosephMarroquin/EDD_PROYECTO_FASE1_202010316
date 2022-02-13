@@ -70,4 +70,61 @@ public class ListaDeEspera {
         return null;
     }
     
+    //Eliminar nodo de la lista de espera
+    public void EliminarListaEspera(ClientesEspera _clienteEspera){
+        Nodo actual=new Nodo(_clienteEspera);
+        Nodo anterior=new Nodo(_clienteEspera);
+        actual=primero;
+        anterior=ultimo;
+        do{
+            if(actual.clienteEspera==_clienteEspera){
+                if(actual==primero){
+                    primero=primero.siguiente;
+                    ultimo.siguiente=primero;
+                    primero.anterior=ultimo;
+                }else if(actual==ultimo){
+                    ultimo=anterior;
+                    primero.anterior=ultimo;
+                    ultimo.siguiente=primero;
+                }else{
+                    anterior.siguiente=actual.siguiente;
+                    actual.siguiente.anterior=anterior;
+                }
+            }
+            anterior=actual;
+            actual=actual.siguiente;
+        }while(actual!=primero);
+    }
+    
+    //Verificar si el cliente ya tiene todas sus imagenes
+    public void VerificacionImagenes(ColaImpresion cola_impresion, ColaImpresionBw cola_impresionBw, ListaClientesAtendidos lista_clienteAtendido, ListaDeEspera lista_espera){
+        if(primero!=null){
+            Nodo actual=primero;
+            do{
+                String impresoraColor=cola_impresion.BuscarCliente(actual.clienteEspera.id_cliente);
+                String impresoraBw=cola_impresionBw.BuscarClienteBw(actual.clienteEspera.id_cliente);
+                if(impresoraColor!="si" && impresoraBw!="si"){
+
+                    int contadorImagenes=actual.clienteEspera.ListaImgPendiente.ContarImagenes();//Saber el total de imagenes del cliente
+                    int contImgColor=actual.clienteEspera.ListaImgPendiente.ContarImagenesColor();//Saber total de imagenes a color
+                    int contImgBw=actual.clienteEspera.ListaImgPendiente.ContarImagenesBw();//Saber total de imagenes en blanco y negro
+
+                    int totalPasos=4+contadorImagenes+(2*contImgColor)+contImgBw;//Saber el total de pasos del cliente en el sistema
+
+                    //Agregar cliente a lista de clientes atendidos
+                    ClientesAtendidos clienteAtendido=new ClientesAtendidos(actual.clienteEspera.nombre_cliente,actual.clienteEspera.ventanilla_atentida,contadorImagenes,totalPasos);
+                    lista_clienteAtendido.InsertarClienteAtendido(clienteAtendido);
+
+                    System.out.println("El "+actual.clienteEspera.encabezado+" ya posee todas sus imágenes impresas y sale de la empresa registrando el tiempo total dentro de ella");
+
+                    //Eliminar cliente de lista de espera
+                    lista_espera.EliminarListaEspera(actual.clienteEspera);
+
+                }
+
+                actual=actual.siguiente;
+            }while(actual!=primero);
+        }
+    }
+    
 }
