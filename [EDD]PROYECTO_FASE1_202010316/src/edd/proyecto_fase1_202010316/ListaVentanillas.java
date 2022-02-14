@@ -81,14 +81,23 @@ public class ListaVentanillas {
     }
     
     //INGRESO DEL CLIENTE A LAS VENTANILLAS
-    public void ingresarClienteVentana(String encabezadoCliente, int idCliente){
+    public void ingresarClienteVentana(String encabezadoCliente, int idCliente, ColaRecepcion colaRecepcion, ColaRecepcionVerdad colaRecepcionVerdad){
         Nodo aux=cabeza;
         while(aux!=null){
             
-            if(aux.ventanilla.estado=="Disponible" && ColaRecepcion.encabezadoCliente!=""){
+            if(aux.ventanilla.estado=="Disponible" && ColaRecepcionVerdad.encabezadoCliente!=""){
                 aux.ventanilla.estado="Ocupado"; //Se cambia el estado de la ventanilla a ocupado
                 aux.ventanilla.id_cliente=idCliente; //La ventanilla guarda que cliente esta atendiendo
                 System.out.println("El "+encabezadoCliente+" ingresa a la ventanilla "+aux.ventanilla.nVentanilla); //Se imprime en consola N cliente entro a N ventana
+                
+                ClientesEnCola clientCola=new ClientesEnCola("",0,"",0,0);
+                clientCola=colaRecepcionVerdad.mandarAlClinete(idCliente);
+                
+                Clientes client=new Clientes(clientCola.encabezado,clientCola.id_cliente,clientCola.nombre_cliente,clientCola.img_color,clientCola.img_bw);
+                colaRecepcion.Insertar(client);
+                
+                colaRecepcionVerdad.Extraer();
+                
                 break;
             }
             

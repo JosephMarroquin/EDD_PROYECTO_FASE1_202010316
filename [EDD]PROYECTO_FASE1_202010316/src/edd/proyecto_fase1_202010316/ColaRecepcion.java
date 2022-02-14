@@ -15,10 +15,6 @@ import java.nio.file.Paths;
  */
 public class ColaRecepcion {
     
-    //
-    public static String encabezadoCliente;
-    public static int idDelCliente;
-    //
     
     private NodoRecepcion inicioCola, finalCola;
     String Cola="";
@@ -123,27 +119,6 @@ public class ColaRecepcion {
         }
     }
     
-    //Saber que cliente estoy atendiendo
-    public void MostrarEncabezadoCliente(ListaVentanillas lista_ventanillas){
-        NodoRecepcion recorrido=inicioCola;
-        while(recorrido!=null){
-            
-            if(recorrido.informacion.atendiendo=="no"){
-                if(lista_ventanillas.HayVentanasDisp()=="si"){
-                    encabezadoCliente=recorrido.informacion.encabezado;
-                    idDelCliente=recorrido.informacion.id_cliente;
-                    recorrido.informacion.atendiendo="si";
-                    break;
-                }          
-            } else{
-                encabezadoCliente="";
-                idDelCliente=0;
-            }
-            
-            recorrido=recorrido.siguiente;
-        }
-    }
-    
     //Buscar id e informar cuantas imagenes a color tiene el cliente
     public int CantidadImgColorRecepcion(int idClienteRecepcion){
         NodoRecepcion recorrido=inicioCola;
@@ -230,55 +205,6 @@ public class ColaRecepcion {
         }
     }
     
-    //Metodo para graficar en graphviz
-    public void generarDot() throws IOException{
-        String resultado="digraph G{\nlabel=\""+"Cola Recepcion"+"\";\nnode [shape=box];\n";
-        NodoRecepcion aux = inicioCola;
-        String conexiones="";
-        String nodos="";
-        while(aux != null){
-            nodos+="N"+aux.hashCode()+"[label=\"nodo "+aux.informacion.nombre_cliente+"\"];\n";
-            if(aux.siguiente != null){
-                conexiones+="N"+aux.hashCode()+ " -> "+"N"+aux.siguiente.hashCode()+";\n";
-            }
-            aux = aux.siguiente;
-        }
-        resultado+= "//Agregando nodods\n";
-        resultado+=nodos+"\n";
-        resultado+= "//Agregando conexiones\n";
-        resultado+="{rank= same;\n"+conexiones+"\n";
-        
-        resultado+="}\n}";       
-        
-        String path = "Estructuras\\ColaRecepcion.txt";
-        Files.write(Paths.get(path), resultado.getBytes());
-        
-    }
     
-    public void generarJPG(){
-        try{
-            String dotPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
-            
-            String fileInputPath ="Estructuras\\ColaRecepcion.txt";
-            String fileOutputPath = "Estructuras\\ColaRecepcion.jpg";
-            
-            String tParam = "-Tjpg";
-            String tOParam = "-o";
-
-            String[] cmd = new String[5];
-
-            cmd[0] = dotPath;
-            cmd[1] = tParam;
-            cmd[2] = fileInputPath;
-            cmd[3] = tOParam;
-            cmd[4] = fileOutputPath;
-
-            Runtime rt = Runtime.getRuntime();
-            rt.exec(cmd);
-            
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {}
-    }
     
 }

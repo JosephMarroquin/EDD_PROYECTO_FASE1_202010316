@@ -109,6 +109,18 @@ public class ColaRecepcionVerdad {
             recorrido = recorrido.siguiente;
         }
     }
+    
+    //Busqeuda
+    public ClientesEnCola mandarAlClinete(int idCliente){
+        Nodo recorrido = inicioCola;
+        while (recorrido != null) {
+            if(recorrido.clientesEnCola.id_cliente==idCliente){
+                return recorrido.clientesEnCola;
+            }
+            recorrido = recorrido.siguiente;
+        }
+        return null;   
+    }
 
     //Saber que cliente estoy atendiendo
     public void MostrarEncabezadoCliente(ListaVentanillas lista_ventanillas) {
@@ -128,6 +140,10 @@ public class ColaRecepcionVerdad {
             }
 
             recorrido = recorrido.siguiente;
+        }
+        if(recorrido==null){
+            encabezadoCliente = "";
+                idDelCliente = 0;
         }
     }
 
@@ -219,24 +235,40 @@ public class ColaRecepcionVerdad {
 
     //Metodo para graficar en graphviz
     public void generarDot() throws IOException {
-        String resultado = "digraph G{\nlabel=\"" + "Cola Recepcion" + "\";\nnode [shape=box];\n";
+        String resultado="digraph G{\nlabel=\""+"Cola Recepcion"+"\";\nnode [shape=box];\n";
         Nodo aux = inicioCola;
-        String conexiones = "";
-        String nodos = "";
-        while (aux != null) {
-            nodos += "N" + aux.hashCode() + "[label=\"nodo " + aux.clientesEnCola.nombre_cliente + "\"];\n";
-            if (aux.siguiente != null) {
-                conexiones += "N" + aux.hashCode() + " -> " + "N" + aux.siguiente.hashCode() + ";\n";
-            }
-            aux = aux.siguiente;
+        String conexiones="";
+        String nodos="";
+        
+        //
+        String cola="";
+        
+        while(aux!=null){
+            cola+=aux.clientesEnCola.encabezado+" ";
+            aux=aux.siguiente;
         }
-        resultado += "//Agregando nodods\n";
-        resultado += nodos + "\n";
-        resultado += "//Agregando conexiones\n";
-        resultado += "{rank= same;\n" + conexiones + "\n";
-
-        resultado += "}\n}";
-
+        
+        String cadena []=cola.split(" ");
+        
+        String inicio=cadena[cadena.length-1];
+        
+        for(int i=cadena.length-1;i>=0;i--){
+            nodos+="N"+inicio.hashCode()+"[label=\"nodo "+cadena[i]+"\"];\n";
+            if(i-1>=0){  
+                conexiones+="N"+inicio.hashCode()+ " -> "+"N"+cadena[i-1].hashCode()+";\n";
+                inicio=cadena[i-1];
+            }         
+        }
+        
+        //
+        
+        resultado+= "//Agregando nodods\n";
+        resultado+=nodos+"\n";
+        resultado+= "//Agregando conexiones\n";
+        resultado+="{rank= same;\n"+conexiones+"\n";
+        
+        resultado+="}\n}";       
+        
         String path = "Estructuras\\ColaRecepcion.txt";
         Files.write(Paths.get(path), resultado.getBytes());
 

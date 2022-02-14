@@ -31,6 +31,7 @@ import org.json.JSONObject;
 public class EDDPROYECTO_FASE1_202010316 {
     
     private static ColaRecepcion cola_recepcion=new ColaRecepcion();
+    private static ColaRecepcionVerdad cola_recepcionVerdad=new ColaRecepcionVerdad();
     private static ListaVentanillas lista_ventanillas=new ListaVentanillas();
     private static ListaImgPila lista_img_pila=new ListaImgPila();
     private static ListaClientesAtendidos lista_clienteAtendido=new ListaClientesAtendidos();
@@ -83,8 +84,8 @@ public class EDDPROYECTO_FASE1_202010316 {
                         break;
                     case 3:
                         //Cola Recepcion
-                        cola_recepcion.generarDot();
-                        cola_recepcion.generarJPG();
+                        cola_recepcionVerdad.generarDot();
+                        cola_recepcionVerdad.generarJPG();
                         
                         //Lista ventanillas
                         lista_ventanillas.generarDot();
@@ -281,8 +282,8 @@ public class EDDPROYECTO_FASE1_202010316 {
                 int img_color=contenidoCliente.getInt("img_color");
                 int img_bw=contenidoCliente.getInt("img_bw");
                 
-                Clientes cl=new Clientes(nCliente,id_cliente,nombre_cliente,img_color,img_bw);
-                cola_recepcion.Insertar(cl);
+                ClientesEnCola cl=new ClientesEnCola(nCliente,id_cliente,nombre_cliente,img_color,img_bw);
+                cola_recepcionVerdad.Insertar(cl);
                 
             }
             
@@ -318,10 +319,10 @@ public class EDDPROYECTO_FASE1_202010316 {
     public static void EjecutarPaso(){
         
         //---------------------------------------------------------------------------------------
-        cola_recepcion.MostrarEncabezadoCliente(lista_ventanillas); //Saber que cliente estoy atendiendo
-        String encabezadoCliente=ColaRecepcion.encabezadoCliente; //Saber que cliente estoy atendiendo
-        int idDelCliente=ColaRecepcion.idDelCliente; //Saber que cliente estoy atendiendo
-        lista_ventanillas.ingresarClienteVentana(encabezadoCliente,idDelCliente);//INGRESO DEL CLIENTE A LAS VENTANILLAS
+        cola_recepcionVerdad.MostrarEncabezadoCliente(lista_ventanillas); //Saber que cliente estoy atendiendo
+        String encabezadoCliente=ColaRecepcionVerdad.encabezadoCliente; //Saber que cliente estoy atendiendo
+        int idDelCliente=ColaRecepcionVerdad.idDelCliente; //Saber que cliente estoy atendiendo
+        lista_ventanillas.ingresarClienteVentana(encabezadoCliente, idDelCliente, cola_recepcion, cola_recepcionVerdad);//INGRESO DEL CLIENTE A LAS VENTANILLAS
         //---------------------------------------------------------------------------------------
         
     }

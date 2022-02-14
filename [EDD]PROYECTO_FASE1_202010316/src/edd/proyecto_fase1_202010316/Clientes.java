@@ -24,7 +24,7 @@ public class Clientes {
         this.nombre_cliente=_nombre_cliente;
         this.img_color=_img_color;
         this.img_bw=_img_bw;
-        this.atendiendo="no";
+        this.atendiendo="si";
     }
     
 }
