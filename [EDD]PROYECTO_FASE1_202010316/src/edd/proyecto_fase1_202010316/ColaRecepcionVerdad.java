@@ -300,4 +300,20 @@ public class ColaRecepcionVerdad {
         } finally {
         }
     }
+    
+    //Verificar que no exista id
+    public int VerificacionId(int id){
+        Nodo recorrido = inicioCola;
+        while (recorrido != null) {
+            if(recorrido.clientesEnCola.id_cliente==id){              
+                id=(int)(Math.random()*(10000-1000+1)+1000);
+            }
+            recorrido = recorrido.siguiente;
+        }
+        if(recorrido==null){
+            return id;
+        }
+        return Integer.MAX_VALUE;
+    }
+    
 }
