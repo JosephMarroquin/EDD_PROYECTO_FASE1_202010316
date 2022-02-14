@@ -210,7 +210,7 @@ public class ListaClientesAtendidos {
         String conexiones="";
         String nodos="";
         while(aux != null){
-            nodos+="N"+aux.hashCode()+"[label=\"nodo "+aux.cliente_atendido.nombre_cliente+"\"];\n";
+            nodos+="N"+aux.hashCode()+"[label=\"nodo "+aux.cliente_atendido.id_cliente+"\"];\n";
             if(aux.next != null){
                 conexiones+="N"+aux.hashCode()+ " -> "+"N"+aux.next.hashCode()+";\n";
             }
