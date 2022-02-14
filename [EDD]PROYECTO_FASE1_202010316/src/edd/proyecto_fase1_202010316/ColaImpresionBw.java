@@ -5,6 +5,10 @@
  */
 package edd.proyecto_fase1_202010316;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  *
  * @author josep
@@ -114,6 +118,73 @@ public class ColaImpresionBw {
                  
             recorrido=recorrido.siguiente;
         }
+    }
+    
+    //Metodo para graficar en graphviz
+    public void generarDot() throws IOException{
+        String resultado="digraph G{\nlabel=\""+"Cola Impresora Blanco y Negro"+"\";\nnode [shape=box];\n";
+        Nodo aux = inicioCola;
+        String conexiones="";
+        String nodos="";
+        
+        //
+        String cola="";
+        
+        while(aux!=null){
+            cola+=aux.impresoraBw.id_cliente+"Bw"+" ";
+            aux=aux.siguiente;
+        }
+        
+        String cadena []=cola.split(" ");
+        
+        String inicio=cadena[cadena.length-1];
+        
+        for(int i=cadena.length-1;i>=0;i--){
+            nodos+="N"+inicio.hashCode()+"[label=\"nodo "+cadena[i]+"\"];\n";
+            if(i-1>=0){  
+                conexiones+="N"+inicio.hashCode()+ " -> "+"N"+cadena[i-1].hashCode()+";\n";
+                inicio=cadena[i-1];
+            }         
+        }
+        
+        //
+        
+        resultado+= "//Agregando nodods\n";
+        resultado+=nodos+"\n";
+        resultado+= "//Agregando conexiones\n";
+        resultado+="{rank= same;\n"+conexiones+"\n";
+        
+        resultado+="}\n}";       
+        
+        String path = "Estructuras\\ColaImpresoraBw.txt";
+        Files.write(Paths.get(path), resultado.getBytes());
+        
+    }
+    
+    public void generarJPG(){
+        try{
+            String dotPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+            
+            String fileInputPath ="Estructuras\\ColaImpresoraBw.txt";
+            String fileOutputPath = "Estructuras\\ColaImpresoraBw.jpg";
+            
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+            
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {}
     }
     
 }

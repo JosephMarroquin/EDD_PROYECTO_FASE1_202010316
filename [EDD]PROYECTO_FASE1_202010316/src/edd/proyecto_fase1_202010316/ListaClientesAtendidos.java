@@ -5,6 +5,10 @@
  */
 package edd.proyecto_fase1_202010316;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  *
  * @author josep
@@ -197,6 +201,57 @@ public class ListaClientesAtendidos {
             }           
             aux=aux.next;
         }     
+    }
+    
+    //Metodo para graficar en graphviz
+    public void generarDot() throws IOException{
+        String resultado="digraph G{\nlabel=\""+"Clientes Atendidos"+"\";\nnode [shape=box];\n";
+        Nodo aux = cabeza;
+        String conexiones="";
+        String nodos="";
+        while(aux != null){
+            nodos+="N"+aux.hashCode()+"[label=\"nodo "+aux.cliente_atendido.nombre_cliente+"\"];\n";
+            if(aux.next != null){
+                conexiones+="N"+aux.hashCode()+ " -> "+"N"+aux.next.hashCode()+";\n";
+            }
+            aux = aux.next;
+        }
+        resultado+= "//Agregando nodods\n";
+        resultado+=nodos+"\n";
+        resultado+= "//Agregando conexiones\n";
+        resultado+="{rank= same;\n"+conexiones+"\n";
+        
+        resultado+="}\n}";       
+        
+        String path = "Estructuras\\ListaClientesAtendidos.txt";
+        Files.write(Paths.get(path), resultado.getBytes());
+        
+    }
+    
+    public void generarJPG(){
+        try{
+            String dotPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+            
+            String fileInputPath ="Estructuras\\ListaClientesAtendidos.txt";
+            String fileOutputPath = "Estructuras\\ListaClientesAtendidos.jpg";
+            
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+            
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {}
     }
     
 }

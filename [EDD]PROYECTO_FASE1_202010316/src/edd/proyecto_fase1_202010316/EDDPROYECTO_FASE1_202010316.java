@@ -44,7 +44,7 @@ public class EDDPROYECTO_FASE1_202010316 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
         Scanner sn= new Scanner(System.in);
@@ -72,6 +72,7 @@ public class EDDPROYECTO_FASE1_202010316 {
                         parametrosIniciales();
                         break;
                     case 2:
+                        GenerarClientesColaRecepcion();//Generar clientes random
                         System.out.println("------------------PASO "+contador_pasos_generales+"------------------");
                         contador_pasos_generales+=1;
                         System.out.println("------------------------------------------");
@@ -81,7 +82,29 @@ public class EDDPROYECTO_FASE1_202010316 {
                         EjecutarPaso();                   
                         break;
                     case 3:
+                        //Cola Recepcion
+                        cola_recepcion.generarDot();
+                        cola_recepcion.generarJPG();
                         
+                        //Lista ventanillas
+                        lista_ventanillas.generarDot();
+                        lista_ventanillas.generarJPG();
+                        
+                        //Cola impresora Color
+                        cola_impresion.generarDot();
+                        cola_impresion.generarJPG();
+                        
+                        //Cola impresora Blanco y Negro
+                        cola_impresionBw.generarDot();
+                        cola_impresionBw.generarJPG();
+                        
+                        //ListaDeEspera
+                        lista_espera.dibujarGrapvhiz();
+                        
+                        //Lista Clientes Atendidos
+                        lista_clienteAtendido.generarDot();    
+                        lista_clienteAtendido.generarJPG();
+                        //
                         break;
                     case 4:
                         Reportes();
@@ -210,10 +233,9 @@ public class EDDPROYECTO_FASE1_202010316 {
     
     public static void cargaMasiva(){
         String path;
-        JFileChooser fc = new JFileChooser();
-        int respuesta = fc.showOpenDialog(fc);
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            path=String.valueOf(fc.getSelectedFile()); 
+        Scanner n = new Scanner (System.in);
+        System.out.println("Ingrese la ruta del archivo JSON: ");
+        path=n.nextLine();
             
             //LECTURA DEL JSON GUARDANDOLO EN UN STRING  
             String contenidoJSON = "";
@@ -264,7 +286,7 @@ public class EDDPROYECTO_FASE1_202010316 {
                 
             }
             
-        }
+        
     }
    
     public static void pruebCola(){
@@ -324,6 +346,29 @@ public class EDDPROYECTO_FASE1_202010316 {
     
     public static void ReportesBuscarCliente(int idCliente){
         lista_clienteAtendido.BuscarClienteAtendido(idCliente);      
+    }
+    
+    //Generar los clientes aleatorios
+    public static void GenerarClientesColaRecepcion(){
+        //Genero clientes aleatorios (entre 0 y 3)
+        int CantidadClientes=0;
+        CantidadClientes=(int)(Math.random()*4);
+        
+        //Genero cantidad de imagenes por cliente (entre 0 y 4) 
+        int ImgColor=0;
+        ImgColor=(int)(Math.random()*3);
+        
+        int ImgBw=0;
+        ImgBw=(int)(Math.random()*3);
+        
+        String nombre[]={"Joseph","Luis","Anthony","Maria","Jeferson","Monica","Sofia","Alejandra","Steven","Justin","Marlon","Mark","Jose","Antonio","Manuel","Francisco","David","Javier","Jaime","James"};
+        
+        int NombreAlz=0;
+        NombreAlz=(int)(Math.random()*nombre.length);
+        
+        for(int i=0;i<CantidadClientes;i++){
+            
+        }
     }
     
 }
