@@ -81,53 +81,10 @@ public class EDDPROYECTO_FASE1_202010316 {
                         EjecutarPaso();                   
                         break;
                     case 3:
-                        lista_espera.MostrarListaEspera();
-                        /*
-                        ImagenPendiente imgp1=new ImagenPendiente("Color");
-                        ImagenPendiente imgp2=new ImagenPendiente("Blanco y Negro");
-                        ImagenPendiente imgp3=new ImagenPendiente("Color");
                         
-                        ClientesEspera cp1=new ClientesEspera("Clietnte2",2,"Juan",5);
-                        ClientesEspera cp2=new ClientesEspera("Clietnte3",3,"Pedro",6);
-                        ClientesEspera cp3=new ClientesEspera("Clietnte4",4,"Alex",8);
-                        ClientesEspera cp4=new ClientesEspera("Clietnte5",5,"Pepe",9);
-                        lista_espera.IngresarListaEspera(cp1);
-                        lista_espera.IngresarListaEspera(cp2);
-                        lista_espera.IngresarListaEspera(cp3);
-                        lista_espera.IngresarListaEspera(cp4);
-                        
-                        ClientesEspera gg=new ClientesEspera("",0,"",0);
-                        gg=lista_espera.BuscarIdClienteEspera(2);
-                        gg.ListaImgPendiente.Insertar_ImagenPendiente(imgp1);
-                        gg.ListaImgPendiente.Insertar_ImagenPendiente(imgp2);
-                        gg.ListaImgPendiente.MostrarContenido_ImagenPendiente();
-                        
-                        ClientesEspera gg2=new ClientesEspera("",0,"",0);
-                        gg2=lista_espera.BuscarIdClienteEspera(3);
-                        gg2.ListaImgPendiente.Insertar_ImagenPendiente(imgp3);
-                        gg2.ListaImgPendiente.MostrarContenido_ImagenPendiente();
-                        */
                         break;
                     case 4:
-                        ImagenPorVentana img1=new ImagenPorVentana(1);
-                        ImagenPorVentana img2=new ImagenPorVentana(2);
-                        ImagenPorVentana img3=new ImagenPorVentana(3);
-                        ImagenPorVentana img4=new ImagenPorVentana(4);
-                        lista_img_pila.Insertar_ImagenPorVentana(img1);
-                        lista_img_pila.Insertar_ImagenPorVentana(img2);
-                        lista_img_pila.Insertar_ImagenPorVentana(img3);
-                        lista_img_pila.Insertar_ImagenPorVentana(img4);
-                        
-                        ImagenPorVentana im=new ImagenPorVentana(0);
-                        im=lista_img_pila.BuscarVentana(1);
-                        Imagenes cc=new Imagenes(2,"color");
-                        Imagenes cc2=new Imagenes(3,"color");
-                        im.pilaImagen.InsertarPilaImg(cc);
-                        im.pilaImagen.InsertarPilaImg(cc2);
-                        im.pilaImagen.MostrarPilaImg();
-                        im.pilaImagen.ContarPilaImg();
-                        im.pilaImagen.ExtraerPilaImg();
-                        im.pilaImagen.MostrarPilaImg();                        
+                        Reportes();
                         break;
                     case 5:
                         System.out.println("--------DATOS DEL ESTUDIANTE--------");
@@ -198,6 +155,59 @@ public class EDDPROYECTO_FASE1_202010316 {
         }
     }
     
+    public static void Reportes(){
+        Scanner sn= new Scanner(System.in);
+        boolean salir=false;
+        int opcion;
+        
+        while(!salir){
+            
+            System.out.println("-------------------------------------------------------------------------");
+            System.out.println("| 1. Top 5 de clientes con mayor cantidad de imagenes a color           |");
+            System.out.println("| 2. Top 5 de clientes con menor cantidad de imágenes en blanco y negro |");
+            System.out.println("| 3. Información del cliente que más pasos estuvo en el sistema         |");
+            System.out.println("| 4. Buscar cliente                                                     |");
+            System.out.println("| 5. Regresar                                                           |");
+            System.out.println("-------------------------------------------------------------------------");
+            
+            try{
+            
+                System.out.println("Introduce una opcion");
+                opcion=sn.nextInt();
+
+                switch(opcion){
+                    case 1:
+                        lista_clienteAtendido.Top5ClientesImgColor();
+                        lista_clienteAtendido.MostrarTop5ImgColor();
+                        break;
+                    case 2:
+                        lista_clienteAtendido.Top5ClientesImgBw();     
+                        lista_clienteAtendido.MostrarTop5ImgBw();
+                        break;
+                    case 3:
+                        lista_clienteAtendido.ClienteMayorNumPasos(lista_clienteAtendido);
+                        break;
+                    case 4:
+                        Scanner n = new Scanner (System.in);
+                        System.out.println("Ingrese el id del cliente a buscar: ");
+                        int id=n.nextInt();
+                        ReportesBuscarCliente(id);
+                        break;
+                    case 5:
+                        salir=true;
+                        break;
+                    default:
+                        System.out.println("Ingrese una opcion valida");
+                }
+            
+            }catch(InputMismatchException e){
+                System.out.println("Opcion Invalida");
+                sn.next();
+            }
+            
+        }
+    }
+    
     public static void cargaMasiva(){
         String path;
         JFileChooser fc = new JFileChooser();
@@ -242,18 +252,12 @@ public class EDDPROYECTO_FASE1_202010316 {
                 //Insertar clientes en nuestra Cola Recepcion
                 
                 String nCliente="Cliente"+i;
-                System.out.println("--------------------------------------------");
                 JSONObject objetoJson = new JSONObject(contenidoJSON);
                 JSONObject contenidoCliente = objetoJson.getJSONObject(nCliente);
-                System.out.println(contenidoCliente);
                 int id_cliente=contenidoCliente.getInt("id_cliente");
-                System.out.println(id_cliente);
                 String nombre_cliente=contenidoCliente.getString("nombre_cliente");
-                System.out.println(nombre_cliente);
                 int img_color=contenidoCliente.getInt("img_color");
-                System.out.println(img_color);
                 int img_bw=contenidoCliente.getInt("img_bw");
-                System.out.println(img_bw);
                 
                 Clientes cl=new Clientes(nCliente,id_cliente,nombre_cliente,img_color,img_bw);
                 cola_recepcion.Insertar(cl);
@@ -316,6 +320,10 @@ public class EDDPROYECTO_FASE1_202010316 {
     //verificar que el cliente tenga imagenes en cola de impresion
     public static void VerificarColaImpresion(){
         lista_espera.VerificacionImagenes(cola_impresion, cola_impresionBw, lista_clienteAtendido, lista_espera);
+    }
+    
+    public static void ReportesBuscarCliente(int idCliente){
+        lista_clienteAtendido.BuscarClienteAtendido(idCliente);      
     }
     
 }

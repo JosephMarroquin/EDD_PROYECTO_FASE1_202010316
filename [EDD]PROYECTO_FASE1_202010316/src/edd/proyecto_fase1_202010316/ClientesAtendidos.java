@@ -11,15 +11,19 @@ package edd.proyecto_fase1_202010316;
  */
 public class ClientesAtendidos {
     
+    int id_cliente;
     String nombre_cliente;
     int ventanilla_atendida;
-    int imagenes_impresas;
+    int imagenes_impresasColor;
+    int imagenes_impresasBw;
     int total_pasos;
     
-    public ClientesAtendidos(String _nombre_cliente, int _ventanilla_atendida, int _imagenes_impresas, int _total_pasos){
+    public ClientesAtendidos(int _id_cliente, String _nombre_cliente, int _ventanilla_atendida, int _imagenes_impresasColor, int _imagenes_impresasBw, int _total_pasos){
+        this.id_cliente=_id_cliente;
         this.nombre_cliente=_nombre_cliente;
         this.ventanilla_atendida=_ventanilla_atendida;
-        this.imagenes_impresas=_imagenes_impresas;
+        this.imagenes_impresasColor=_imagenes_impresasColor;
+        this.imagenes_impresasBw=_imagenes_impresasBw;
         this.total_pasos=_total_pasos;
     }
     

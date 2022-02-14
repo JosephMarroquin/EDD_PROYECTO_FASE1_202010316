@@ -109,10 +109,10 @@ public class ListaDeEspera {
                     int contImgColor=actual.clienteEspera.ListaImgPendiente.ContarImagenesColor();//Saber total de imagenes a color
                     int contImgBw=actual.clienteEspera.ListaImgPendiente.ContarImagenesBw();//Saber total de imagenes en blanco y negro
 
-                    int totalPasos=4+contadorImagenes+(2*contImgColor)+contImgBw;//Saber el total de pasos del cliente en el sistema
+                    int totalPasos=5+contadorImagenes+(2*contImgColor)+contImgBw;//Saber el total de pasos del cliente en el sistema
 
                     //Agregar cliente a lista de clientes atendidos
-                    ClientesAtendidos clienteAtendido=new ClientesAtendidos(actual.clienteEspera.nombre_cliente,actual.clienteEspera.ventanilla_atentida,contadorImagenes,totalPasos);
+                    ClientesAtendidos clienteAtendido=new ClientesAtendidos(actual.clienteEspera.id_cliente,actual.clienteEspera.nombre_cliente,actual.clienteEspera.ventanilla_atentida,contImgColor,contImgBw,totalPasos);
                     lista_clienteAtendido.InsertarClienteAtendido(clienteAtendido);
 
                     System.out.println("El "+actual.clienteEspera.encabezado+" ya posee todas sus imágenes impresas y sale de la empresa registrando el tiempo total dentro de ella");
