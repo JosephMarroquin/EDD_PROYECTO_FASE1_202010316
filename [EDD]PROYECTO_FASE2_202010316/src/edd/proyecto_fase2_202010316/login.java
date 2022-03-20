@@ -6,6 +6,7 @@
 package edd.proyecto_fase2_202010316;
 
 import javax.swing.JOptionPane;
+import ABB.*;
 
 /**
  *
@@ -14,12 +15,18 @@ import javax.swing.JOptionPane;
 public class login extends javax.swing.JFrame {
 
     public static ArbolB cliente = new ArbolB();
+    public static bst abb=new bst();
 
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
+        cliente.insertar(1,"","");
+        cliente.insertar(2,"","");
+        cliente.insertar(3,"","");
+        cliente.insertar(4,"","");
+        cliente.mostrarArbolB(cliente.raiz.primero);
     }
 
     /**
@@ -108,13 +115,14 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cliente.mostrarArbolB();
+        cliente.mostrarArbolB(cliente.raiz.primero);
         if (jTextField1.getText().equals("admin") && jPasswordField1.getText().equals("EDD2022")) {
             moduloADMIN ma = new moduloADMIN();
             ma.setVisible(true);
             this.dispose();
         } else if (cliente.verificarLogin(Long.parseLong(jTextField1.getText()), jPasswordField1.getText()) == true) {
             moduloUsuario mu = new moduloUsuario();
+            mu.setId_cliente(Long.parseLong(jTextField1.getText()));
             mu.setVisible(true);
             this.dispose();
         } else {

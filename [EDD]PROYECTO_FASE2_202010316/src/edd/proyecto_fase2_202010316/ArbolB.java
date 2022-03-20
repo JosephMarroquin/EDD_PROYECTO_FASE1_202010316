@@ -124,20 +124,19 @@ public class ArbolB {
     }
 
     //Mostrar datos
-    public void mostrarArbolB() {
+    public void mostrarArbolB(Clientes tmp) {
         try {
-            Clientes aux = raiz.primero;
-            while (aux != null) {
-                System.out.println("-------------------------");
-                System.out.println(aux.dpi);
-                System.out.println(aux.nombre);
-                System.out.println(aux.contraseña);
-                System.out.println("-------------------------");
-
-                aux = aux.siguiente;
+            if (tmp != null) {
+                System.out.print(tmp.dpi + " ");
+                
+                mostrarArbolB(tmp.siguiente);
+                
+                mostrarArbolB(tmp.izquierda.primero);
+                
+                mostrarArbolB(tmp.derecha.primero);
+                
             }
         } catch (Exception e) {
-            System.out.println("No se ha registrado ningun Cliente");
         }
     }
 
@@ -208,11 +207,5 @@ public class ArbolB {
             System.out.println("No se ha registrado ningun Cliente");
         }
     }
-
-    //Eliminar un dato del arbolB
-    public void eliminarArbolB(long dpi) {
-        
-    }
-
 
 }

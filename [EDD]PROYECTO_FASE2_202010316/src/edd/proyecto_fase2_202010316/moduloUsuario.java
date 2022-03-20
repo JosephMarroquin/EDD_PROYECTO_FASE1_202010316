@@ -5,6 +5,17 @@
  */
 package edd.proyecto_fase2_202010316;
 
+import com.google.gson.Gson;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Scanner;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import ABB.*;
+
 /**
  *
  * @author josep
@@ -27,47 +38,128 @@ public class moduloUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Cerrar Sesion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Modulo Usuario");
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Cargar Capas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
+        jMenu1.add(jMenuItem1);
 
-        jLabel1.setText("Modulo Usuario");
+        jMenuItem2.setText("Cargar Imagenes");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Cargar Albumes");
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Cerrar Sesion");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(89, 89, 89)
+                .addGap(486, 486, 486)
                 .addComponent(jLabel1)
-                .addGap(0, 141, Short.MAX_VALUE))
+                .addContainerGap(565, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addGap(0, 277, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(669, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private long id_cliente;
+
+    public void setId_cliente(long id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+    
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
+
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    System.out.println("-----------------------------------");
+                    JSONArray array2 = (JSONArray) jobj.get("pixeles");
+                    JSONObject pixeles;
+                    for (int j = 0; j < array2.size(); j++) {
+                        pixeles=(JSONObject) array2.get(j);
+                        
+                        System.out.println("id: "+jobj.get("id_capa"));
+                        System.out.println("fila: "+pixeles.get("fila"));
+                        System.out.println("columna: "+pixeles.get("columna"));
+                        System.out.println("color: "+pixeles.get("color"));
+                        System.out.println();
+                        
+                        int id_capa=(Integer) jobj.get("id_capa");
+                        int fila=(Integer) pixeles.get("fila");
+                        int columna=(Integer) pixeles.get("columna");
+                        String color=(String) pixeles.get("color");
+                        capas _capas=new capas(id_cliente,id_capa,fila,columna,color);
+                        login.abb.add(_capas);
+                    }
+                    
+                    System.out.println("-----------------------------------");
+                }
+
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         login log = new login();
         log.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,8 +197,13 @@ public class moduloUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 
 }
