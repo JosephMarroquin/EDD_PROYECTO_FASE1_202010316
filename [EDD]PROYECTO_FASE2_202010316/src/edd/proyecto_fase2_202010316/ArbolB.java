@@ -161,7 +161,7 @@ public class ArbolB {
             Clientes aux = raiz.primero;
             while (aux != null) {
                 if (aux.dpi == dpi && aux.contraseña.equals(contraseña)) {
-                    System.out.println("**********************************////////");
+                    //System.out.println("**********************************////////");
                     return true;
                 }
                 aux = aux.siguiente;

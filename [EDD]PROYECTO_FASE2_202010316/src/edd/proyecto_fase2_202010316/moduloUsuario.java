@@ -15,6 +15,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import ABB.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -38,7 +40,13 @@ public class moduloUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -48,7 +56,27 @@ public class moduloUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Modulo Usuario");
+        jButton1.setText("jButton1");
+
+        jButton2.setText("Ver Arbol de Capas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("jButton3");
+
+        jButton4.setText("jButton4");
+
+        jButton5.setText("jButton5");
+
+        jButton6.setText("Graficar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -83,21 +111,51 @@ public class moduloUsuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(486, 486, 486)
-                .addComponent(jLabel1)
-                .addContainerGap(565, Short.MAX_VALUE))
+                .addContainerGap(598, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(jButton1)
+                            .addGap(35, 35, 35)
+                            .addComponent(jButton2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3)
+                            .addGap(45, 45, 45)
+                            .addComponent(jButton4)
+                            .addGap(44, 44, 44)
+                            .addComponent(jButton5)
+                            .addGap(56, 56, 56)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton6)
+                        .addGap(435, 435, 435))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(669, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3)
+                        .addComponent(jButton4)
+                        .addComponent(jButton5))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static bst abbGraphviz=new bst();
+    
     private long id_cliente;
 
     public void setId_cliente(long id_cliente) {
@@ -133,23 +191,30 @@ public class moduloUsuario extends javax.swing.JFrame {
                     for (int j = 0; j < array2.size(); j++) {
                         pixeles=(JSONObject) array2.get(j);
                         
-                        System.out.println("id: "+jobj.get("id_capa"));
-                        System.out.println("fila: "+pixeles.get("fila"));
+                        //System.out.println("id: "+jobj.get("id_capa"));
+                        /*System.out.println("fila: "+pixeles.get("fila"));
                         System.out.println("columna: "+pixeles.get("columna"));
                         System.out.println("color: "+pixeles.get("color"));
-                        System.out.println();
+                        System.out.println();*/
                         
-                        int id_capa=(Integer) jobj.get("id_capa");
-                        int fila=(Integer) pixeles.get("fila");
-                        int columna=(Integer) pixeles.get("columna");
-                        String color=(String) pixeles.get("color");
-                        capas _capas=new capas(id_cliente,id_capa,fila,columna,color);
+                        String id_capa=String.valueOf(jobj.get("id_capa"));
+                        String fila=String.valueOf(pixeles.get("fila"));
+                        String columna=String.valueOf(pixeles.get("columna"));
+                                
+                        capas _capas=new capas(id_cliente,Integer.valueOf(id_capa),Integer.valueOf(fila),Integer.valueOf(columna),String.valueOf(pixeles.get("color")));
                         login.abb.add(_capas);
+                        
+                        bst.existe="no";
+                        abbGraphviz.existe(abbGraphviz.root, Integer.valueOf(id_capa));
+                        if(bst.existe.equals("no")){
+                            abbGraphviz.add(_capas);
+                            System.out.println(id_capa);
+                        }
+                        
                     }
                     
                     System.out.println("-----------------------------------");
                 }
-
             }
         } catch (Exception e) {
         }
@@ -160,6 +225,17 @@ public class moduloUsuario extends javax.swing.JFrame {
         log.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String ubicacion = "Estructuras\\ABB\\abb_"+id_cliente+".jpg";
+        Image imagen=new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon=new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
+        jLabel2.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        abbGraphviz.graficar(abbGraphviz.root);   
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,7 +273,13 @@ public class moduloUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

@@ -26,7 +26,7 @@ public class login extends javax.swing.JFrame {
         cliente.insertar(2,"","");
         cliente.insertar(3,"","");
         cliente.insertar(4,"","");
-        cliente.mostrarArbolB(cliente.raiz.primero);
+        //cliente.mostrarArbolB(cliente.raiz.primero);
     }
 
     /**
@@ -115,7 +115,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cliente.mostrarArbolB(cliente.raiz.primero);
+        //cliente.mostrarArbolB(cliente.raiz.primero);
         if (jTextField1.getText().equals("admin") && jPasswordField1.getText().equals("EDD2022")) {
             moduloADMIN ma = new moduloADMIN();
             ma.setVisible(true);
