@@ -12,9 +12,9 @@ package AVL;
 public class imagen {
     long id_cliente;
     int id_imagen;
-    int capa;
+    String capa;
     
-    public imagen(long id_cliente, int id_imagen, int capa){
+    public imagen(long id_cliente, int id_imagen, String capa){
         this.id_cliente=id_cliente;
         this.id_imagen=id_imagen;
         this.capa=capa;

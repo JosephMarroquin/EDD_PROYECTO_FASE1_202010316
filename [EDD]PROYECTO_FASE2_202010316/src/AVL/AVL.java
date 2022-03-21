@@ -5,12 +5,18 @@
  */
 package AVL;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 /**
  *
  * @author josep
  */
 class NodeAVL {
 
+    private static int correlativo = 1;
+    public final int id;
+    
     imagen _imagen;
     NodeAVL left;
     NodeAVL right;
@@ -21,12 +27,13 @@ class NodeAVL {
         left = null;
         right = null;
         alt = 0;
+        this.id = correlativo++;
     }
 }
 
 public class AVL {
 
-    NodeAVL root = null;
+    public NodeAVL root = null;
 
     public void add(imagen _imagen) {
         root = add(_imagen, root);
@@ -128,7 +135,69 @@ public class AVL {
             System.out.print(tmp._imagen.id_imagen + " ");
         }
     }
-    
 
- 
+    //Graficar
+    public void graficar(NodeAVL tmp) {
+        FileWriter fichero = null;
+        PrintWriter escritor;
+        String dot = "Estructuras\\AVL\\avl_" + tmp._imagen.id_cliente + ".dot";
+        String jpg = "Estructuras\\AVL\\avl_" + tmp._imagen.id_cliente + ".jpg";
+        try {
+            fichero = new FileWriter(dot);
+            escritor = new PrintWriter(fichero);
+            escritor.print(getCodigoGraphviz(tmp));
+        } catch (Exception e) {
+            System.err.println("Error al escribir el archivo .dot");
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                System.err.println("Error al cerrar el archivo .dot");
+            }
+        }
+        try {
+            String dotPath = "dot";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = dot;
+            cmd[3] = tOParam;
+            cmd[4] = jpg;
+
+            Runtime.getRuntime().exec(cmd);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private String getCodigoGraphviz(NodeAVL tmp) {
+        return "digraph grafica{\n"
+                + "rankdir=TB;\n"
+                + "node [shape = record, style=filled, fillcolor=seashell2];\n"
+                + getCodigoInterno(tmp)
+                + "}\n";
+    }
+
+    private String getCodigoInterno(NodeAVL tmp) {
+        String etiqueta;
+        if (tmp.left == null && tmp.right == null) {
+            etiqueta = "nodo" + tmp.id + " [ label =\"" + tmp._imagen.id_imagen + "\"];\n";
+        } else {
+            etiqueta = "nodo" + tmp.id + " [ label =\"<C0>|" + tmp._imagen.id_imagen + "|<C1>\"];\n";
+        }
+        if (tmp.left != null) {
+            etiqueta = etiqueta + getCodigoInterno(tmp.left)
+                    + "nodo" + tmp.id + ":C0->nodo" + tmp.left.id + "\n";
+        }
+        if (tmp.right != null) {
+            etiqueta = etiqueta + getCodigoInterno(tmp.right)
+                    + "nodo" + tmp.id + ":C1->nodo" + tmp.right.id + "\n";
+        }
+        return etiqueta;
+    }
+
 }

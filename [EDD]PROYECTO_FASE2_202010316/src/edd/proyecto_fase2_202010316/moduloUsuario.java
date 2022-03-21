@@ -50,6 +50,7 @@ public class moduloUsuario extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -59,7 +60,12 @@ public class moduloUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Ver Arbol de Imagenes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Ver Arbol de Capas");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +84,13 @@ public class moduloUsuario extends javax.swing.JFrame {
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Graficar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
             }
         });
 
@@ -120,40 +133,41 @@ public class moduloUsuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(598, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                        .addGroup(layout.createSequentialGroup()
+                            .addGap(43, 43, 43)
+                            .addComponent(jButton7)
+                            .addGap(96, 96, 96)
+                            .addComponent(jButton6))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGap(8, 8, 8)
                             .addComponent(jButton1)
-                            .addGap(35, 35, 35)
+                            .addGap(32, 32, 32)
                             .addComponent(jButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(47, 47, 47)
                             .addComponent(jButton3)
-                            .addGap(45, 45, 45)
+                            .addGap(18, 18, 18)
                             .addComponent(jButton4)
-                            .addGap(44, 44, 44)
-                            .addComponent(jButton5)
-                            .addGap(56, 56, 56)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton6)
-                        .addGap(435, 435, 435))))
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton5)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jButton6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7)
+                    .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3)
-                        .addComponent(jButton4)
-                        .addComponent(jButton5))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -168,7 +182,6 @@ public class moduloUsuario extends javax.swing.JFrame {
 
     //ARBOL AVL
     public static AVL avl = new AVL();
-    public static AVL avlGraphviz=new AVL();
 
     //
     private long id_cliente;
@@ -203,12 +216,12 @@ public class moduloUsuario extends javax.swing.JFrame {
                     System.out.println("-----------------------------------");
                     JSONArray array2 = (JSONArray) jobj.get("pixeles");
                     JSONObject pixeles;
-                    
+
                     String id_capa = String.valueOf(jobj.get("id_capa"));
-                    
-                    capas capG=new capas(id_cliente,Integer.valueOf(id_capa),0,0,"");
+
+                    capas capG = new capas(id_cliente, Integer.valueOf(id_capa), 0, 0, "");
                     abbGraphviz.add(capG);
-                    
+
                     for (int j = 0; j < array2.size(); j++) {
                         pixeles = (JSONObject) array2.get(j);
 
@@ -217,7 +230,6 @@ public class moduloUsuario extends javax.swing.JFrame {
                         System.out.println("columna: "+pixeles.get("columna"));
                         System.out.println("color: "+pixeles.get("color"));
                         System.out.println();*/
-                        
                         String fila = String.valueOf(pixeles.get("fila"));
                         String columna = String.valueOf(pixeles.get("columna"));
 
@@ -275,25 +287,12 @@ public class moduloUsuario extends javax.swing.JFrame {
                     jobj = (JSONObject) array.get(i);
                     System.out.println("-----------------------------------");
                     //System.out.println(jobj.get("id"));
-                    
-                    String capas = String.valueOf(jobj.get("capas"));
-                    
-                    String patron="\\d+";
-                    Pattern pattern =Pattern.compile(patron);
-                    Matcher matcher=pattern.matcher(capas);
-                    
+
                     String id_imagen = String.valueOf(jobj.get("id"));
-                    
-                    while(matcher.find()){
-                        //System.out.println(matcher.group());
-                        String capa=matcher.group();
-                        imagen img=new imagen(id_cliente,Integer.valueOf(id_imagen),Integer.valueOf(capa));
-                        avl.add(img);
-                    }
-                    
-                    //Datos para graficar el arbol en grapvhiz
-                    imagen imgG=new imagen(id_cliente,Integer.valueOf(id_imagen),Integer.valueOf(capas));
-                    avlGraphviz.add(imgG);
+                    String capas = String.valueOf(jobj.get("capas"));
+                    System.out.println(capas);
+                    imagen img=new imagen(id_cliente,Integer.valueOf(id_imagen),capas);
+                    avl.add(img);
 
                     System.out.println("-----------------------------------");
                 }
@@ -301,6 +300,18 @@ public class moduloUsuario extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        avl.graficar(avl.root);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String ubicacion = "Estructuras\\AVL\\avl_" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
+        jLabel2.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,6 +355,7 @@ public class moduloUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
