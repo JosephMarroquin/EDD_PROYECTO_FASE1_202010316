@@ -146,7 +146,7 @@ public class bst {
         return etiqueta;
     }
     
-    public static String existe="";
+    /*public static String existe="";
 
     public void existe(Node tmp, long id) {
         if (tmp != null) {
@@ -158,6 +158,6 @@ public class bst {
             existe(tmp.left,id);
             existe(tmp.right,id);
         }
-    }
+    }*/
 
 }

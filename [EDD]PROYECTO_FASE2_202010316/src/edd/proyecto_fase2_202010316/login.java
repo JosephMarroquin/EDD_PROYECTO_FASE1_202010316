@@ -15,7 +15,6 @@ import ABB.*;
 public class login extends javax.swing.JFrame {
 
     public static ArbolB cliente = new ArbolB();
-    public static bst abb=new bst();
 
     /**
      * Creates new form login

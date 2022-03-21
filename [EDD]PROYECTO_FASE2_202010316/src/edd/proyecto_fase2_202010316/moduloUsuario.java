@@ -17,6 +17,9 @@ import org.json.simple.parser.JSONParser;
 import ABB.*;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import AVL.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -89,6 +92,11 @@ public class moduloUsuario extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Cargar Imagenes");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Cargar Albumes");
@@ -154,14 +162,21 @@ public class moduloUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static bst abbGraphviz=new bst();
-    
+    //ARBOL BINARIO DE BUSQUEDA
+    public static bst abb = new bst();
+    public static bst abbGraphviz = new bst();
+
+    //ARBOL AVL
+    public static AVL avl = new AVL();
+    public static AVL avlGraphviz=new AVL();
+
+    //
     private long id_cliente;
 
     public void setId_cliente(long id_cliente) {
         this.id_cliente = id_cliente;
     }
-    
+
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
             Gson json = new Gson();
@@ -188,31 +203,29 @@ public class moduloUsuario extends javax.swing.JFrame {
                     System.out.println("-----------------------------------");
                     JSONArray array2 = (JSONArray) jobj.get("pixeles");
                     JSONObject pixeles;
+                    
+                    String id_capa = String.valueOf(jobj.get("id_capa"));
+                    
+                    capas capG=new capas(id_cliente,Integer.valueOf(id_capa),0,0,"");
+                    abbGraphviz.add(capG);
+                    
                     for (int j = 0; j < array2.size(); j++) {
-                        pixeles=(JSONObject) array2.get(j);
-                        
+                        pixeles = (JSONObject) array2.get(j);
+
                         //System.out.println("id: "+jobj.get("id_capa"));
                         /*System.out.println("fila: "+pixeles.get("fila"));
                         System.out.println("columna: "+pixeles.get("columna"));
                         System.out.println("color: "+pixeles.get("color"));
                         System.out.println();*/
                         
-                        String id_capa=String.valueOf(jobj.get("id_capa"));
-                        String fila=String.valueOf(pixeles.get("fila"));
-                        String columna=String.valueOf(pixeles.get("columna"));
-                                
-                        capas _capas=new capas(id_cliente,Integer.valueOf(id_capa),Integer.valueOf(fila),Integer.valueOf(columna),String.valueOf(pixeles.get("color")));
-                        login.abb.add(_capas);
-                        
-                        bst.existe="no";
-                        abbGraphviz.existe(abbGraphviz.root, Integer.valueOf(id_capa));
-                        if(bst.existe.equals("no")){
-                            abbGraphviz.add(_capas);
-                            System.out.println(id_capa);
-                        }
-                        
+                        String fila = String.valueOf(pixeles.get("fila"));
+                        String columna = String.valueOf(pixeles.get("columna"));
+
+                        capas _capas = new capas(id_cliente, Integer.valueOf(id_capa), Integer.valueOf(fila), Integer.valueOf(columna), String.valueOf(pixeles.get("color")));
+                        abb.add(_capas);
+
                     }
-                    
+
                     System.out.println("-----------------------------------");
                 }
             }
@@ -227,15 +240,67 @@ public class moduloUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String ubicacion = "Estructuras\\ABB\\abb_"+id_cliente+".jpg";
-        Image imagen=new ImageIcon(ubicacion).getImage();
-        ImageIcon imgIcon=new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
+        String ubicacion = "Estructuras\\ABB\\abb_" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
         jLabel2.setIcon(imgIcon);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        abbGraphviz.graficar(abbGraphviz.root);   
+        abbGraphviz.graficar(abbGraphviz.root);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
+
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    System.out.println("-----------------------------------");
+                    //System.out.println(jobj.get("id"));
+                    
+                    String capas = String.valueOf(jobj.get("capas"));
+                    
+                    String patron="\\d+";
+                    Pattern pattern =Pattern.compile(patron);
+                    Matcher matcher=pattern.matcher(capas);
+                    
+                    String id_imagen = String.valueOf(jobj.get("id"));
+                    
+                    while(matcher.find()){
+                        //System.out.println(matcher.group());
+                        String capa=matcher.group();
+                        imagen img=new imagen(id_cliente,Integer.valueOf(id_imagen),Integer.valueOf(capa));
+                        avl.add(img);
+                    }
+                    
+                    //Datos para graficar el arbol en grapvhiz
+                    imagen imgG=new imagen(id_cliente,Integer.valueOf(id_imagen),Integer.valueOf(capas));
+                    avlGraphviz.add(imgG);
+
+                    System.out.println("-----------------------------------");
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
