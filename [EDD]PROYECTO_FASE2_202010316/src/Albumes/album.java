@@ -10,5 +10,14 @@ package Albumes;
  * @author josep
  */
 public class album {
+    long id_cliente;
+    String nombre;
+    String imgs;
+    
+    public album(long id_cliente, String nombre, String imgs){
+        this.id_cliente=id_cliente;
+        this.nombre=nombre;
+        this.imgs=imgs; 
+    }
     
 }

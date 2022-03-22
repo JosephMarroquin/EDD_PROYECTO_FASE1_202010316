@@ -20,6 +20,8 @@ import javax.swing.ImageIcon;
 import AVL.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import Albumes.*;
+import Matriz.*;
 
 /**
  *
@@ -51,6 +53,8 @@ public class moduloUsuario extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -74,7 +78,12 @@ public class moduloUsuario extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Ver Listado de albumes");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("jButton4");
 
@@ -91,6 +100,20 @@ public class moduloUsuario extends javax.swing.JFrame {
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Graficar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("jButton9");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
             }
         });
 
@@ -113,6 +136,11 @@ public class moduloUsuario extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Cargar Albumes");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Cerrar Sesion");
@@ -131,43 +159,57 @@ public class moduloUsuario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(598, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(jButton9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(43, 43, 43)
-                            .addComponent(jButton7)
-                            .addGap(96, 96, 96)
-                            .addComponent(jButton6))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(8, 8, 8)
-                            .addComponent(jButton1)
-                            .addGap(32, 32, 32)
-                            .addComponent(jButton2)
-                            .addGap(47, 47, 47)
-                            .addComponent(jButton3)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton4)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton5)))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton7)
+                                .addGap(59, 59, 59)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(26, 26, 26)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jButton6)
+                                .addGap(91, 91, 91)
+                                .addComponent(jButton8)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(jButton6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(15, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton7)
+                            .addComponent(jButton6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -182,6 +224,9 @@ public class moduloUsuario extends javax.swing.JFrame {
 
     //ARBOL AVL
     public static AVL avl = new AVL();
+
+    //LISTA CIRCULAR DOBLE ENLAZADA
+    public static listaAlbum lista_album = new listaAlbum();
 
     //
     private long id_cliente;
@@ -290,8 +335,8 @@ public class moduloUsuario extends javax.swing.JFrame {
 
                     String id_imagen = String.valueOf(jobj.get("id"));
                     String capas = String.valueOf(jobj.get("capas"));
-                    System.out.println(capas);
-                    imagen img=new imagen(id_cliente,Integer.valueOf(id_imagen),capas);
+                    //System.out.println(capas);
+                    imagen img = new imagen(id_cliente, Integer.valueOf(id_imagen), capas);
                     avl.add(img);
 
                     System.out.println("-----------------------------------");
@@ -312,6 +357,67 @@ public class moduloUsuario extends javax.swing.JFrame {
         ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
         jLabel2.setIcon(imgIcon);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
+
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    System.out.println("-----------------------------------");
+                    //System.out.println(jobj.get("nombre_album"));
+                    //System.out.println(jobj.get("imgs"));
+
+                    String nombre_album = String.valueOf(jobj.get("nombre_album"));
+                    String imgs = String.valueOf(jobj.get("imgs"));
+
+                    album alb = new album(id_cliente, nombre_album, imgs);
+                    lista_album.IngresarAlbum(alb);
+
+                    System.out.println("-----------------------------------");
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String ubicacion = "Estructuras\\LC\\lc_" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
+        jLabel2.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        lista_album.graficar(id_cliente);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        Matriz matriz = new Matriz();
+        matriz.insertar("Ayeser", 2, 1);
+        matriz.insertar("Kelly", 3, 1);
+        matriz.insertar("Alan", 2, 2);
+        matriz.insertar("Rony", 1, 1);
+
+        matriz.imprimir_horizontal();
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,6 +462,8 @@ public class moduloUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
