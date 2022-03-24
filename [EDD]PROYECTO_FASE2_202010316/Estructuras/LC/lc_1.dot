@@ -1,4 +1,0 @@
-digraph G
-{
-"album 1"->"album 2"->"album 3"->"album 1"->"album 3"->"album 2"->"album 1"    rankdir=LR;
-}

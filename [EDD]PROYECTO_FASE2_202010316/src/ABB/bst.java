@@ -7,6 +7,7 @@ package ABB;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import Matriz.*;
 
 /**
  *
@@ -58,11 +59,12 @@ public class bst {
         }
     }
 
-    void preorder(Node tmp) {
-        if (tmp != null) {
-            System.out.print(tmp._capas.id_capa + " ");
-            preorder(tmp.left);
-            preorder(tmp.right);
+    public void preorder(Node tmp, MatrizDispersa matriz, long id_cliente) {
+        if (tmp != null && tmp._capas.id_cliente==id_cliente) {
+            matriz.insertar(tmp._capas.columna, tmp._capas.fila,tmp._capas.color);
+            //System.out.print(tmp._capas.id_capa + " ");
+            preorder(tmp.left, matriz,id_cliente);
+            preorder(tmp.right, matriz,id_cliente);
         }
     }
 
@@ -123,7 +125,7 @@ public class bst {
     private String getCodigoGraphviz(Node tmp) {
         return "digraph grafica{\n"
                 + "rankdir=TB;\n"
-                + "node [shape = record, style=filled, fillcolor=seashell2];\n"
+                + "node [shape = circle, style=filled, fillcolor=seashell2];\n"
                 + getCodigoInterno(tmp)
                 + "}\n";
     }
@@ -133,19 +135,56 @@ public class bst {
         if (tmp.left == null && tmp.right == null) {
             etiqueta = "nodo" + tmp.id + " [ label =\"" + tmp._capas.id_capa + "\"];\n";
         } else {
-            etiqueta = "nodo" + tmp.id + " [ label =\"<C0>|" + tmp._capas.id_capa + "|<C1>\"];\n";
+            etiqueta = "nodo" + tmp.id + " [ label =\"" + tmp._capas.id_capa + "\"];\n";
         }
         if (tmp.left != null) {
             etiqueta = etiqueta + getCodigoInterno(tmp.left)
-                    + "nodo" + tmp.id + ":C0->nodo" + tmp.left.id + "\n";
+                    + "nodo" + tmp.id + "->nodo" + tmp.left.id + "\n";
         }
         if (tmp.right != null) {
             etiqueta = etiqueta + getCodigoInterno(tmp.right)
-                    + "nodo" + tmp.id + ":C1->nodo" + tmp.right.id + "\n";
+                    + "nodo" + tmp.id + "->nodo" + tmp.right.id + "\n";
         }
         return etiqueta;
     }
-    
+
+    int nivel = -1;
+
+    public void imprimirNiveles(Node tmp, lista list) {
+        if (tmp.left == null && tmp.right == null) {
+
+            nivel = nivel + 1;
+            //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
+            info inf = new info(tmp._capas.id_capa, nivel);
+            list.InsertarClienteAtendido(inf);
+
+        } else {
+            nivel = nivel + 1;
+            //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
+            info inf = new info(tmp._capas.id_capa, nivel);
+            list.InsertarClienteAtendido(inf);
+        }
+        if (tmp.left != null) {
+            imprimirNiveles(tmp.left, list);
+            nivel = 0;
+        }
+        if (tmp.right != null) {
+            imprimirNiveles(tmp.right, list);
+            nivel = 0;
+        }
+    }
+
+    /*public void recorridoAmplitud(Node tmp, int capa, Matriz matriz) {
+        if (tmp != null) {
+            if (capa == tmp._capas.id_capa) {
+                matriz.insertar(tmp._capas.columna, tmp._capas.fila, tmp._capas.color);
+            }
+            recorridoAmplitud(tmp.left, capa, matriz);
+            recorridoAmplitud(tmp.right, capa, matriz);
+        }
+    }*/
+
+
     /*public static String existe="";
 
     public void existe(Node tmp, long id) {
@@ -159,5 +198,4 @@ public class bst {
             existe(tmp.right,id);
         }
     }*/
-
 }
