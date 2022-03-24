@@ -136,6 +136,11 @@ public class moduloUsuario extends javax.swing.JFrame {
         jButton13.setText("Generar por capa");
 
         jButton14.setText("Ver");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
 
         jButton15.setText("Ver");
 
@@ -494,6 +499,13 @@ public class moduloUsuario extends javax.swing.JFrame {
         matriz.graficar(String.valueOf(id_cliente));
 
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        String ubicacion = "Estructuras\\PREORDEN\\MDF" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
+        jLabel1.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton14ActionPerformed
 
     /**
      * @param args the command line arguments
