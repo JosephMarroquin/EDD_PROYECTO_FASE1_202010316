@@ -456,6 +456,379 @@ public class MatrizDispersa {
             System.out.println("ex: " + e.getMessage());
         }
     }
+    
+    public void graficarPorIMG(String capa) {
+        m = new Matriz(columnas, filas);
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("Estructuras\\PORIMAGEN\\MD" + capa + ".txt");
+            pw = new PrintWriter(fichero);
 
+            NodoMDX auxx = columnas;
+            NodoMDY auxy = filas;
+            String rank = "";
+            pw.println("digraph G {\n m[shape=square;label=\"Matriz\";group = 0];");
+            while (auxx != null) {
+
+                pw.println("x" + auxx.columna + "[shape=square;label=\"" + auxx.columna + "\";group=" + auxx.columna + "];");
+                rank = rank + ";x" + auxx.columna;
+                if (auxx == columnas) {
+                    pw.println("m->x" + auxx.columna + ";");
+                } else {
+                    pw.println("x" + auxx.anterior.columna + "->" + "x" + auxx.columna + ";");
+                    pw.println("x" + auxx.columna + "->" + "x" + auxx.anterior.columna + ";");
+                }
+                auxx = auxx.siguiente;
+            }
+            pw.println("{rank = same; m" + rank + "}");
+
+            while (auxy != null) {
+
+                pw.println("y" + auxy.fila + "[shape=square;label=\"" + auxy.fila + "\";group=" + 0 + "];");
+                if (auxy == filas) {
+                    pw.println("m->y" + auxy.fila + ";");
+                } else {
+                    pw.println("y" + auxy.anterior.fila + "->" + "y" + auxy.fila + ";");
+                    pw.println("y" + auxy.anterior.fila + "->" + "y" + auxy.fila + "[dir=back];");
+                }
+                auxy = auxy.siguiente;
+            }
+            auxy = filas;
+            while (auxy != null) {
+                Celda auxCelday = auxy.derecha;
+                rank = "";
+
+                while (auxCelday != null) {
+                    pw.println("C" + auxCelday.posx + "L" + auxCelday.posy + "[shape=square; label = \"" + auxCelday.posx + "," + auxCelday.posy + "\"; fontcolor=white; color=\"" + auxCelday.tipo + "\"; style = filled; group =" + auxCelday.posx + "];");
+                    rank = rank + ";" + "C" + auxCelday.posx + "L" + auxCelday.posy;
+
+                    if (auxCelday == auxy.derecha) {
+                        pw.println("y" + auxCelday.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                        pw.println("y" + auxCelday.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+
+                    } else if (auxCelday.izquierda.posx != auxCelday.posx) {
+                        pw.println("C" + auxCelday.izquierda.posx + "L" + auxCelday.izquierda.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                        pw.println("C" + auxCelday.izquierda.posx + "L" + auxCelday.izquierda.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+
+                    }
+                    auxx = columnas;
+                    while (auxx != null) {
+                        Celda auxCeldax = auxx.abajo;
+                        while (auxCeldax != null) {
+                            if (auxCelday == auxx.abajo) {
+                                pw.println("x" + auxCelday.posx + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                                pw.println("x" + auxCelday.posx + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+                                break;
+                            } else if (auxCelday == auxCeldax) {
+                                pw.println("C" + auxCeldax.arriba.posx + "L" + auxCeldax.arriba.posy + "->" + "C" + auxCeldax.posx + "L" + auxCeldax.posy + ";");
+                                pw.println("C" + auxCeldax.arriba.posx + "L" + auxCeldax.arriba.posy + "->" + "C" + auxCeldax.posx + "L" + auxCeldax.posy + "[dir=back];");
+                                break;
+                            }
+                            auxCeldax = auxCeldax.abajo;
+                        }
+                        auxx = auxx.siguiente;
+                    }
+                    pw.println("{rank = same; y" + auxy.fila + rank + "}");
+                    auxCelday = auxCelday.derecha;
+                }
+                auxy = auxy.siguiente;
+            }
+            pw.println("}");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+
+        try {
+            String command = "dot -Tjpg Estructuras\\PORIMAGEN\\MD" + capa + ".txt -o Estructuras\\PORIMAGEN\\MD" + capa + ".jpg";
+            Process child = Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            System.out.println("ex: " + e.getMessage());
+        }
+
+        fichero = null;
+        pw = null;
+        try {
+            fichero = new FileWriter("Estructuras\\PORIMAGEN\\MDF" + capa + ".txt");
+            pw = new PrintWriter(fichero);
+
+            NodoMDY auxy = filas;
+            pw.println("digraph G {\n node[shape=square, style=filled, height=1, width=1];");
+
+            while (auxy != null) {
+                Celda auxCelda = auxy.derecha;
+                while (auxCelda != null) {
+                    pw.println("C" + auxCelda.posx + "L" + auxCelda.posy + "[label=" + '"' + '"' + ", pos=" + '"' + auxCelda.posy * 70 + "," + auxCelda.posx * 70 + '"' + ", " + "fillcolor=\"" + auxCelda.tipo + "\"]");
+                    auxCelda = auxCelda.derecha;
+                }
+                auxy = auxy.siguiente;
+            }
+            pw.println("}");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+
+        try {
+            String command = "neato -n -Tjpg Estructuras\\PORIMAGEN\\MDF" + capa + ".txt -o Estructuras\\PORIMAGEN\\MDF" + capa + ".jpg";
+            Process child = Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            System.out.println("ex: " + e.getMessage());
+        }
+    }
+
+    
+    public void graficarPorCapa(String capa) {
+        m = new Matriz(columnas, filas);
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("Estructuras\\PORCAPA\\MD" + capa + ".txt");
+            pw = new PrintWriter(fichero);
+
+            NodoMDX auxx = columnas;
+            NodoMDY auxy = filas;
+            String rank = "";
+            pw.println("digraph G {\n m[shape=square;label=\"Matriz\";group = 0];");
+            while (auxx != null) {
+
+                pw.println("x" + auxx.columna + "[shape=square;label=\"" + auxx.columna + "\";group=" + auxx.columna + "];");
+                rank = rank + ";x" + auxx.columna;
+                if (auxx == columnas) {
+                    pw.println("m->x" + auxx.columna + ";");
+                } else {
+                    pw.println("x" + auxx.anterior.columna + "->" + "x" + auxx.columna + ";");
+                    pw.println("x" + auxx.columna + "->" + "x" + auxx.anterior.columna + ";");
+                }
+                auxx = auxx.siguiente;
+            }
+            pw.println("{rank = same; m" + rank + "}");
+
+            while (auxy != null) {
+
+                pw.println("y" + auxy.fila + "[shape=square;label=\"" + auxy.fila + "\";group=" + 0 + "];");
+                if (auxy == filas) {
+                    pw.println("m->y" + auxy.fila + ";");
+                } else {
+                    pw.println("y" + auxy.anterior.fila + "->" + "y" + auxy.fila + ";");
+                    pw.println("y" + auxy.anterior.fila + "->" + "y" + auxy.fila + "[dir=back];");
+                }
+                auxy = auxy.siguiente;
+            }
+            auxy = filas;
+            while (auxy != null) {
+                Celda auxCelday = auxy.derecha;
+                rank = "";
+
+                while (auxCelday != null) {
+                    pw.println("C" + auxCelday.posx + "L" + auxCelday.posy + "[shape=square; label = \"" + auxCelday.posx + "," + auxCelday.posy + "\"; fontcolor=white; color=\"" + auxCelday.tipo + "\"; style = filled; group =" + auxCelday.posx + "];");
+                    rank = rank + ";" + "C" + auxCelday.posx + "L" + auxCelday.posy;
+
+                    if (auxCelday == auxy.derecha) {
+                        pw.println("y" + auxCelday.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                        pw.println("y" + auxCelday.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+
+                    } else if (auxCelday.izquierda.posx != auxCelday.posx) {
+                        pw.println("C" + auxCelday.izquierda.posx + "L" + auxCelday.izquierda.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                        pw.println("C" + auxCelday.izquierda.posx + "L" + auxCelday.izquierda.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+
+                    }
+                    auxx = columnas;
+                    while (auxx != null) {
+                        Celda auxCeldax = auxx.abajo;
+                        while (auxCeldax != null) {
+                            if (auxCelday == auxx.abajo) {
+                                pw.println("x" + auxCelday.posx + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                                pw.println("x" + auxCelday.posx + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+                                break;
+                            } else if (auxCelday == auxCeldax) {
+                                pw.println("C" + auxCeldax.arriba.posx + "L" + auxCeldax.arriba.posy + "->" + "C" + auxCeldax.posx + "L" + auxCeldax.posy + ";");
+                                pw.println("C" + auxCeldax.arriba.posx + "L" + auxCeldax.arriba.posy + "->" + "C" + auxCeldax.posx + "L" + auxCeldax.posy + "[dir=back];");
+                                break;
+                            }
+                            auxCeldax = auxCeldax.abajo;
+                        }
+                        auxx = auxx.siguiente;
+                    }
+                    pw.println("{rank = same; y" + auxy.fila + rank + "}");
+                    auxCelday = auxCelday.derecha;
+                }
+                auxy = auxy.siguiente;
+            }
+            pw.println("}");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+
+        try {
+            String command = "dot -Tjpg Estructuras\\PORCAPA\\MD" + capa + ".txt -o Estructuras\\PORCAPA\\MD" + capa + ".jpg";
+            Process child = Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            System.out.println("ex: " + e.getMessage());
+        }
+
+        fichero = null;
+        pw = null;
+        try {
+            fichero = new FileWriter("Estructuras\\PORCAPA\\MDF" + capa + ".txt");
+            pw = new PrintWriter(fichero);
+
+            NodoMDY auxy = filas;
+            pw.println("digraph G {\n node[shape=square, style=filled, height=1, width=1];");
+
+            while (auxy != null) {
+                Celda auxCelda = auxy.derecha;
+                while (auxCelda != null) {
+                    pw.println("C" + auxCelda.posx + "L" + auxCelda.posy + "[label=" + '"' + '"' + ", pos=" + '"' + auxCelda.posy * 70 + "," + auxCelda.posx * 70 + '"' + ", " + "fillcolor=\"" + auxCelda.tipo + "\"]");
+                    auxCelda = auxCelda.derecha;
+                }
+                auxy = auxy.siguiente;
+            }
+            pw.println("}");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+
+        try {
+            String command = "neato -n -Tjpg Estructuras\\PORCAPA\\MDF" + capa + ".txt -o Estructuras\\PORCAPA\\MDF" + capa + ".jpg";
+            Process child = Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            System.out.println("ex: " + e.getMessage());
+        }
+    }
+    
+    public void graficoLogico(String capa) {
+        m = new Matriz(columnas, filas);
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("Estructuras\\CAPALOGICO\\MD" + capa + ".txt");
+            pw = new PrintWriter(fichero);
+
+            NodoMDX auxx = columnas;
+            NodoMDY auxy = filas;
+            String rank = "";
+            pw.println("digraph G {\n m[shape=square;label=\"Matriz\";group = 0];");
+            while (auxx != null) {
+
+                pw.println("x" + auxx.columna + "[shape=square;label=\"" + auxx.columna + "\";group=" + auxx.columna + "];");
+                rank = rank + ";x" + auxx.columna;
+                if (auxx == columnas) {
+                    pw.println("m->x" + auxx.columna + ";");
+                } else {
+                    pw.println("x" + auxx.anterior.columna + "->" + "x" + auxx.columna + ";");
+                    pw.println("x" + auxx.columna + "->" + "x" + auxx.anterior.columna + ";");
+                }
+                auxx = auxx.siguiente;
+            }
+            pw.println("{rank = same; m" + rank + "}");
+
+            while (auxy != null) {
+
+                pw.println("y" + auxy.fila + "[shape=square;label=\"" + auxy.fila + "\";group=" + 0 + "];");
+                if (auxy == filas) {
+                    pw.println("m->y" + auxy.fila + ";");
+                } else {
+                    pw.println("y" + auxy.anterior.fila + "->" + "y" + auxy.fila + ";");
+                    pw.println("y" + auxy.anterior.fila + "->" + "y" + auxy.fila + "[dir=back];");
+                }
+                auxy = auxy.siguiente;
+            }
+            auxy = filas;
+            while (auxy != null) {
+                Celda auxCelday = auxy.derecha;
+                rank = "";
+
+                while (auxCelday != null) {
+                    pw.println("C" + auxCelday.posx + "L" + auxCelday.posy + "[shape=square; label = \"" + auxCelday.posx + "," + auxCelday.posy + "\"; fontcolor=white; color=\"" + auxCelday.tipo + "\"; style = filled; group =" + auxCelday.posx + "];");
+                    rank = rank + ";" + "C" + auxCelday.posx + "L" + auxCelday.posy;
+
+                    if (auxCelday == auxy.derecha) {
+                        pw.println("y" + auxCelday.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                        pw.println("y" + auxCelday.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+
+                    } else if (auxCelday.izquierda.posx != auxCelday.posx) {
+                        pw.println("C" + auxCelday.izquierda.posx + "L" + auxCelday.izquierda.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                        pw.println("C" + auxCelday.izquierda.posx + "L" + auxCelday.izquierda.posy + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+
+                    }
+                    auxx = columnas;
+                    while (auxx != null) {
+                        Celda auxCeldax = auxx.abajo;
+                        while (auxCeldax != null) {
+                            if (auxCelday == auxx.abajo) {
+                                pw.println("x" + auxCelday.posx + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + ";");
+                                pw.println("x" + auxCelday.posx + "->" + "C" + auxCelday.posx + "L" + auxCelday.posy + "[dir=back];");
+                                break;
+                            } else if (auxCelday == auxCeldax) {
+                                pw.println("C" + auxCeldax.arriba.posx + "L" + auxCeldax.arriba.posy + "->" + "C" + auxCeldax.posx + "L" + auxCeldax.posy + ";");
+                                pw.println("C" + auxCeldax.arriba.posx + "L" + auxCeldax.arriba.posy + "->" + "C" + auxCeldax.posx + "L" + auxCeldax.posy + "[dir=back];");
+                                break;
+                            }
+                            auxCeldax = auxCeldax.abajo;
+                        }
+                        auxx = auxx.siguiente;
+                    }
+                    pw.println("{rank = same; y" + auxy.fila + rank + "}");
+                    auxCelday = auxCelday.derecha;
+                }
+                auxy = auxy.siguiente;
+            }
+            pw.println("}");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+
+        try {
+            String command = "dot -Tjpg Estructuras\\CAPALOGICO\\MD" + capa + ".txt -o Estructuras\\CAPALOGICO\\MD" + capa + ".jpg";
+            Process child = Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            System.out.println("ex: " + e.getMessage());
+        }
+    }
 
 }

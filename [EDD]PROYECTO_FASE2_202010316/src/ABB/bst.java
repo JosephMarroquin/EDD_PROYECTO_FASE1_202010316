@@ -8,6 +8,7 @@ package ABB;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import Matriz.*;
+import javax.swing.JTextField;
 
 /**
  *
@@ -59,28 +60,73 @@ public class bst {
         }
     }
 
+    public static String contenido = "";
+
     public void preorder(Node tmp, MatrizDispersa matriz, long id_cliente) {
-        if (tmp != null && tmp._capas.id_cliente==id_cliente) {
-            matriz.insertar(tmp._capas.columna, tmp._capas.fila,tmp._capas.color);
+        if (tmp != null) {
+            if (tmp._capas.id_cliente == id_cliente) {
+                matriz.insertar(tmp._capas.columna, tmp._capas.fila, tmp._capas.color);
+            }
             //System.out.print(tmp._capas.id_capa + " ");
-            preorder(tmp.left, matriz,id_cliente);
-            preorder(tmp.right, matriz,id_cliente);
+            preorder(tmp.left, matriz, id_cliente);
+            preorder(tmp.right, matriz, id_cliente);
         }
     }
 
-    void enorder(Node tmp) {
+    public void preordenJtext(Node tmp, JTextField jtextfield, long id_cliente) {
         if (tmp != null) {
-            enorder(tmp.left);
+            if (tmp._capas.id_cliente == id_cliente) {
+                contenido = contenido + tmp._capas.id_capa + " ";
+                jtextfield.setText(contenido);
+            }
             //System.out.print(tmp._capas.id_capa + " ");
-            enorder(tmp.right);
+            preordenJtext(tmp.left, jtextfield, id_cliente);
+            preordenJtext(tmp.right, jtextfield, id_cliente);
         }
     }
 
-    void postorder(Node tmp) {
+    public void enorder(Node tmp, MatrizDispersa matriz, long id_cliente) {
         if (tmp != null) {
-            postorder(tmp.left);
-            postorder(tmp.right);
-            System.out.print(tmp._capas.id_capa + " ");
+            enorder(tmp.left, matriz, id_cliente);
+            if (tmp._capas.id_cliente == id_cliente) {
+                matriz.insertar(tmp._capas.columna, tmp._capas.fila, tmp._capas.color);
+            }
+            //System.out.print(tmp._capas.id_capa + " ");
+            enorder(tmp.right, matriz, id_cliente);
+        }
+    }
+
+    public void enorderJtext(Node tmp, JTextField jtextfield, long id_cliente) {
+        if (tmp != null) {
+            enorderJtext(tmp.left, jtextfield, id_cliente);
+            if (tmp._capas.id_cliente == id_cliente) {
+                contenido = contenido + tmp._capas.id_capa + " ";
+                jtextfield.setText(contenido);
+            }
+            enorderJtext(tmp.right, jtextfield, id_cliente);
+        }
+    }
+
+    public void postorder(Node tmp, MatrizDispersa matriz, long id_cliente) {
+        if (tmp != null) {
+            postorder(tmp.left, matriz, id_cliente);
+            postorder(tmp.right, matriz, id_cliente);
+            if (tmp._capas.id_cliente == id_cliente) {
+                matriz.insertar(tmp._capas.columna, tmp._capas.fila, tmp._capas.color);
+            }
+
+            //System.out.print(tmp._capas.id_capa + " ");
+        }
+    }
+
+    public void postorderJtext(Node tmp, JTextField jtextfield, long id_cliente) {
+        if (tmp != null) {
+            postorderJtext(tmp.left, jtextfield, id_cliente);
+            postorderJtext(tmp.right, jtextfield, id_cliente);
+            if (tmp._capas.id_cliente == id_cliente) {
+                contenido = contenido + tmp._capas.id_capa + " ";
+                jtextfield.setText(contenido);
+            }
         }
     }
 
@@ -174,6 +220,18 @@ public class bst {
         }
     }
 
+    //GRAIFCAR POR ID DE IMAGEN
+    public void bstIngresoCapa(Node tmp, MatrizDispersa matriz, long id_cliente, int id_capa) {
+        if (tmp != null) {
+            if (id_capa == tmp._capas.id_capa && tmp._capas.id_cliente == id_cliente) {
+                matriz.insertar(tmp._capas.columna, tmp._capas.fila, tmp._capas.color);
+                //System.out.println(tmp._capas.columna + " " + tmp._capas.fila + " " + tmp._capas.color);
+            }
+            bstIngresoCapa(tmp.left, matriz, id_cliente, id_capa);
+            bstIngresoCapa(tmp.right, matriz, id_cliente, id_capa);
+        }
+    }
+
     /*public void recorridoAmplitud(Node tmp, int capa, Matriz matriz) {
         if (tmp != null) {
             if (capa == tmp._capas.id_capa) {
@@ -183,9 +241,7 @@ public class bst {
             recorridoAmplitud(tmp.right, capa, matriz);
         }
     }*/
-
-
-    /*public static String existe="";
+ /*public static String existe="";
 
     public void existe(Node tmp, long id) {
         if (tmp != null) {

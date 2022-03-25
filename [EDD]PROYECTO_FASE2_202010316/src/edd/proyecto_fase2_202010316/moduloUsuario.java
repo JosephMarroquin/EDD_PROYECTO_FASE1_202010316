@@ -22,6 +22,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import Albumes.*;
 import Matriz.*;
+import java.awt.image.BufferedImage;
+import java.util.Iterator;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,7 +51,6 @@ public class moduloUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -55,16 +60,17 @@ public class moduloUsuario extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton15 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -96,6 +102,11 @@ public class moduloUsuario extends javax.swing.JFrame {
         });
 
         jButton4.setText("Ver Capa");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Graficar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -126,14 +137,39 @@ public class moduloUsuario extends javax.swing.JFrame {
         });
 
         jButton10.setText("Graficar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Graficar Inorder");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("Graficar Postorden");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jButton12.setText("Generar por imagen");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
 
         jButton13.setText("Generar por capa");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
         jButton14.setText("Ver");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -142,13 +178,26 @@ public class moduloUsuario extends javax.swing.JFrame {
             }
         });
 
-        jButton15.setText("Ver");
-
-        jButton16.setText("Ver");
-
         jButton17.setText("Ver");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
 
         jButton18.setText("Ver");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        jButton15.setText("Rotar");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -192,47 +241,42 @@ public class moduloUsuario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton11))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton14)
-                                .addGap(84, 84, 84)
-                                .addComponent(jButton15)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(28, 28, 28)
+                                .addComponent(jTextField1))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5)
+                                .addComponent(jButton9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton11)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton12)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton13))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton16)
-                                .addGap(90, 90, 90)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
                                 .addComponent(jButton17)
-                                .addGap(81, 81, 81)
-                                .addComponent(jButton18)
-                                .addGap(39, 39, 39)))))
-                .addGap(0, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                                .addGap(95, 95, 95)
+                                .addComponent(jButton18)))
+                        .addGap(0, 44, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton7)
-                                .addGap(70, 70, 70)
+                                .addGap(62, 62, 62)
                                 .addComponent(jButton6)
-                                .addGap(86, 86, 86)
+                                .addGap(88, 88, 88)
                                 .addComponent(jButton8)
-                                .addGap(54, 54, 54)
+                                .addGap(60, 60, 60)
                                 .addComponent(jButton10))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
@@ -241,33 +285,34 @@ public class moduloUsuario extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4)))
-                        .addGap(26, 26, 26))
+                                .addComponent(jButton4))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(294, 294, 294)
+                        .addComponent(jButton15)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8)
-                            .addComponent(jButton10)
-                            .addComponent(jButton6))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton9)
-                                .addComponent(jButton11)
-                                .addComponent(jButton5)
-                                .addComponent(jButton12)
-                                .addComponent(jButton13)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton7)
+                        .addComponent(jButton6)
+                        .addComponent(jButton8)
+                        .addComponent(jButton10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton9)
+                        .addComponent(jButton11)
+                        .addComponent(jButton5)
+                        .addComponent(jButton12)
+                        .addComponent(jButton13)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -275,15 +320,17 @@ public class moduloUsuario extends javax.swing.JFrame {
                     .addComponent(jButton4)
                     .addComponent(jButton1)
                     .addComponent(jButton14)
-                    .addComponent(jButton15)
-                    .addComponent(jButton16)
                     .addComponent(jButton17)
-                    .addComponent(jButton18))
+                    .addComponent(jButton18)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 13, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton15))
         );
 
         pack();
@@ -488,7 +535,10 @@ public class moduloUsuario extends javax.swing.JFrame {
         //abbGraphviz.imprimirNiveles(abbGraphviz.root,list);
         //list.mostrar();
         //System.out.println(list.obtenerMayor());
+        jTextField1.setText("");
+        bst.contenido="";
         abb.preorder(abb.root,matriz,id_cliente);
+        abbGraphviz.preordenJtext(abbGraphviz.root,jTextField1,id_cliente);
 
         
         //columna fila color
@@ -500,13 +550,130 @@ public class moduloUsuario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    public static String ubicacionIMG="";
+    
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         String ubicacion = "Estructuras\\PREORDEN\\MDF" + id_cliente + ".jpg";
         Image imagen = new ImageIcon(ubicacion).getImage();
         ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
         jLabel1.setIcon(imgIcon);
+        ubicacionIMG=ubicacion;
     }//GEN-LAST:event_jButton14ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        MatrizDispersa matriz = new MatrizDispersa();
+        jTextField1.setText("");
+        bst.contenido="";
+        abb.postorder(abb.root,matriz,id_cliente);
+        abbGraphviz.postorderJtext(abbGraphviz.root,jTextField1,id_cliente);
+        matriz.graficar(String.valueOf(id_cliente));
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        MatrizDispersa matriz = new MatrizDispersa();
+        jTextField1.setText("");
+        bst.contenido="";
+        abb.enorder(abb.root,matriz,id_cliente);
+        abbGraphviz.enorderJtext(abbGraphviz.root,jTextField1,id_cliente);
+        matriz.graficar(String.valueOf(id_cliente));
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        
+        File input=new File(ubicacionIMG);
+        File output=new File(ubicacionIMG);
+        rotate90(input,output,ROTATE_RIGHT);
+        
+        String ubicacion = ubicacionIMG;
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
+        jLabel1.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        String entradaUsuario = JOptionPane.showInputDialog("Ingrese el id de una imagen:");
+        System.out.println("El id ingresado es: " + Integer.valueOf(entradaUsuario));
+        //GENERAR IMG POR ID DE IMAGEN
+        MatrizDispersa matriz = new MatrizDispersa();
+        avl.porIDimagen(avl.root,id_cliente,Integer.valueOf(entradaUsuario),matriz,abb);
+        matriz.graficarPorIMG(String.valueOf(id_cliente));
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        String ubicacion = "Estructuras\\PORIMAGEN\\MDF" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
+        jLabel1.setIcon(imgIcon);
+        ubicacionIMG=ubicacion;
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        String ubicacion = "Estructuras\\PORCAPA\\MDF" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
+        jLabel1.setIcon(imgIcon);
+        ubicacionIMG=ubicacion;
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        MatrizDispersa matriz = new MatrizDispersa();
+        String entradaUsuario = JOptionPane.showInputDialog("Ingrese el numero total de capas a evaluar:");
+        for(int i=0;i<Integer.valueOf(entradaUsuario);i++){
+            String numeroCapa = JOptionPane.showInputDialog("Ingrese el id de la capa:");
+            abb.bstIngresoCapa(abb.root, matriz, id_cliente, Integer.valueOf(numeroCapa));
+        }
+        matriz.graficarPorCapa(String.valueOf(id_cliente));
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        MatrizDispersa matriz = new MatrizDispersa();
+        String entradaUsuario = JOptionPane.showInputDialog("Ingrese el numero de capa:");
+        abb.bstIngresoCapa(abb.root, matriz, id_cliente, Integer.valueOf(entradaUsuario));
+        matriz.graficoLogico(String.valueOf(id_cliente));
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String ubicacion = "Estructuras\\CAPALOGICO\\MD" + id_cliente + ".jpg";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH));
+        jLabel2.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    
+    public static final int ROTATE_LEFT=1;
+    public static final int ROTATE_RIGHT=-1;
+    
+    public void rotate90(File input, File output, int direction){
+        try{
+            ImageInputStream iis=ImageIO.createImageInputStream(input);
+            Iterator<ImageReader> iterartor=ImageIO.getImageReaders(iis);
+            ImageReader reader=iterartor.next();
+            String format=reader.getFormatName();
+            
+            BufferedImage image=ImageIO.read(iis);
+            int width=image.getWidth();
+            int height=image.getHeight();
+            
+            BufferedImage rotated=new BufferedImage(height, width, image.getType());
+            
+            for(int y=0; y<height;y++){
+                for(int x=0;x<width;x++){
+                    switch(direction){
+                        case ROTATE_LEFT:
+                            rotated.setRGB(y, (width-1)-x, image.getRGB(x, y));
+                            break;
+                        case ROTATE_RIGHT:
+                            rotated.setRGB((height-1)-y, x, image.getRGB(x, y));
+                            break;
+                    }
+                }
+            }
+            
+            ImageIO.write(rotated, format, output);
+            
+        }catch(Exception e){}
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -550,7 +717,6 @@ public class moduloUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
@@ -569,6 +735,7 @@ public class moduloUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
 }

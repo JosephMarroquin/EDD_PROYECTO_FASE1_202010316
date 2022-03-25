@@ -7,6 +7,10 @@ package AVL;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import ABB.*;
+import Matriz.*;
 
 /**
  *
@@ -16,7 +20,7 @@ class NodeAVL {
 
     private static int correlativo = 1;
     public final int id;
-    
+
     imagen _imagen;
     NodeAVL left;
     NodeAVL right;
@@ -198,6 +202,26 @@ public class AVL {
                     + "nodo" + tmp.id + ":C1->nodo" + tmp.right.id + "\n";
         }
         return etiqueta;
+    }
+
+    //GRAFICAR POR ID DE LA IMAGEN
+    public void porIDimagen(NodeAVL tmp, long id_cliente, int id_imagen, MatrizDispersa matriz,bst abb) {
+        if (tmp != null) {
+            if (id_cliente == tmp._imagen.id_cliente && id_imagen == tmp._imagen.id_imagen) {
+                String patron = "\\d+";
+                Pattern pattern = Pattern.compile(patron);
+                Matcher matcher = pattern.matcher(tmp._imagen.capa);
+
+                while (matcher.find()) {
+                    System.out.println(matcher.group());
+                    String capa = matcher.group();
+                    abb.bstIngresoCapa(abb.root, matriz, id_cliente, Integer.valueOf(capa));
+                }
+                //System.out.print(tmp._imagen.id_imagen + " ");
+            }
+            porIDimagen(tmp.left, id_cliente, id_imagen,matriz,abb);
+            porIDimagen(tmp.right, id_cliente, id_imagen,matriz,abb);
+        }
     }
 
 }
