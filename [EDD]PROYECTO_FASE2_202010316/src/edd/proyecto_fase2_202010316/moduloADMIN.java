@@ -5,11 +5,16 @@
  */
 package edd.proyecto_fase2_202010316;
 
+import com.google.gson.Gson;
 import java.io.File;
+import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -17,16 +22,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class moduloADMIN extends javax.swing.JFrame {
 
-    public static DefaultTableModel tblModel;
-    private String[] header = {"DPI", "Nombre", "Contraseña"};
-
     /**
      * Creates new form moduloADMIN
      */
     public moduloADMIN() {
         initComponents();
-        initTable();
-        login.cliente.mostrarDatosjTable();
     }
 
     /**
@@ -48,8 +48,7 @@ public class moduloADMIN extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -86,12 +85,12 @@ public class moduloADMIN extends javax.swing.JFrame {
             }
         });
 
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+        jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
 
         jMenu1.setText("File");
 
@@ -122,9 +121,6 @@ public class moduloADMIN extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(84, 84, 84)
                         .addComponent(jButton1)
                         .addGap(30, 30, 30)
@@ -151,18 +147,21 @@ public class moduloADMIN extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField1)
                                     .addComponent(jTextField2)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(823, Short.MAX_VALUE))
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addComponent(jButton4)))))
+                .addContainerGap(835, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addGap(35, 35, 35)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jButton4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,9 +175,7 @@ public class moduloADMIN extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(439, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,30 +188,49 @@ public class moduloADMIN extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        JFileChooser selector = new JFileChooser();
-        File file;
-        selector.setMultiSelectionEnabled(false);
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
-        selector.setFileFilter(filtro);
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
 
-        if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
-            file = selector.getSelectedFile();
-            System.out.println(file);
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    System.out.println("-----------------------------------");
+
+                    String dpi = String.valueOf(jobj.get("dpi"));
+                    String nombre_cliente = String.valueOf(jobj.get("nombre_cliente"));
+                    String password = String.valueOf(jobj.get("password"));
+
+                    Clientes clienteAdmin = new Clientes(Long.parseLong(dpi), nombre_cliente, password);
+                    login.cliente.insertar(clienteAdmin);
+
+                    System.out.println("-----------------------------------");
+                }
+            }
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (isNumeric(jTextField1.getText()) == true && login.cliente.existeDPI(Long.parseLong(jTextField1.getText())) == false) {
-            login.cliente.insertar(Long.parseLong(jTextField1.getText()), jTextField2.getText(), jTextField3.getText());
+            Clientes client = new Clientes(Long.parseLong(jTextField1.getText()), jTextField2.getText(), jTextField3.getText());
+            login.cliente.insertar(client);
             JOptionPane.showMessageDialog(null, "Registrado Correctamente");
-
-            //Agregarlo visualmente en la tabla
-            String dpi = jTextField1.getText();
-            String nombre = jTextField2.getText();
-            String contraseña = jTextField3.getText();
-            String[] clienteTabla = {dpi, nombre, contraseña};
-            tblModel.addRow(clienteTabla);
-            //
 
             jTextField1.setText("");
             jTextField2.setText("");
@@ -231,54 +247,19 @@ public class moduloADMIN extends javax.swing.JFrame {
 
         login.cliente.editarArbolB(Long.parseLong(jTextField1.getText()), jTextField2.getText(), jTextField3.getText());
 
-        //Editar visualmente en la tabla
-        if (jTable1.getSelectedRowCount() != 1) {
-            return;
-        }
-        String dpi = jTextField1.getText();
-        String nombre = jTextField2.getText();
-        String contraseña = jTextField3.getText();
-        int fila = jTable1.getSelectedRow();
-
-        String[] clienteTabla = {dpi, nombre, contraseña};
-
-        tblModel.setValueAt(clienteTabla[0], fila, 0);
-        tblModel.setValueAt(clienteTabla[1], fila, 1);
-        tblModel.setValueAt(clienteTabla[2], fila, 2);
-
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if (evt.getClickCount() == 2) {
-            int fila = jTable1.getSelectedRow();
-
-            String dpi = (String) tblModel.getValueAt(fila, 0);
-            String nombre = (String) tblModel.getValueAt(fila, 1);
-            String contraseña = (String) tblModel.getValueAt(fila, 2);
-
-            jTextField1.setText(dpi);
-            jTextField2.setText(nombre);
-            jTextField3.setText(contraseña);
-
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (jTable1.getSelectedRowCount() != 1) {
-            return;
-        }
-        int fila = jTable1.getSelectedRow();
-        
-        String dpi = (String) tblModel.getValueAt(fila, 0);
-        
-        //login.cliente.eliminarArbolB(Long.parseLong(dpi));
-     
-        tblModel.removeRow(fila);
+
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        login.cliente.buscarDPI(Long.parseLong(jTextField1.getText()), jTextField2, jTextField3);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public static boolean isNumeric(String str) {
         try {
@@ -328,6 +309,7 @@ public class moduloADMIN extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -336,19 +318,9 @@ public class moduloADMIN extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 
-    private void initTable() {
-        tblModel = new DefaultTableModel(header, 0) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        jTable1.setModel(tblModel);
-    }
 }

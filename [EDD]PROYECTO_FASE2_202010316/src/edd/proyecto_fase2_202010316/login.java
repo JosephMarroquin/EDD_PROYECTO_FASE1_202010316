@@ -14,18 +14,13 @@ import ABB.*;
  */
 public class login extends javax.swing.JFrame {
 
-    public static ArbolB cliente = new ArbolB();
+    public static lista cliente = new lista();
 
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
-        cliente.insertar(1,"","");
-        cliente.insertar(2,"","");
-        cliente.insertar(3,"","");
-        cliente.insertar(4,"","");
-        //cliente.mostrarArbolB(cliente.raiz.primero);
     }
 
     /**

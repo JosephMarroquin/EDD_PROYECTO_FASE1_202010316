@@ -194,32 +194,6 @@ public class bst {
         return etiqueta;
     }
 
-    int nivel = -1;
-
-    public void imprimirNiveles(Node tmp, lista list) {
-        if (tmp.left == null && tmp.right == null) {
-
-            nivel = nivel + 1;
-            //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
-            info inf = new info(tmp._capas.id_capa, nivel);
-            list.InsertarClienteAtendido(inf);
-
-        } else {
-            nivel = nivel + 1;
-            //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
-            info inf = new info(tmp._capas.id_capa, nivel);
-            list.InsertarClienteAtendido(inf);
-        }
-        if (tmp.left != null) {
-            imprimirNiveles(tmp.left, list);
-            nivel = 0;
-        }
-        if (tmp.right != null) {
-            imprimirNiveles(tmp.right, list);
-            nivel = 0;
-        }
-    }
-
     //GRAIFCAR POR ID DE IMAGEN
     public void bstIngresoCapa(Node tmp, MatrizDispersa matriz, long id_cliente, int id_capa) {
         if (tmp != null) {
@@ -231,6 +205,74 @@ public class bst {
             bstIngresoCapa(tmp.right, matriz, id_cliente, id_capa);
         }
     }
+
+    public void otros(Node tmp, long id_cliente, JTextField jtext1, JTextField jtext2, JTextField jtext3, JTextField jtext4, JTextField jtext5) {
+        preordenJtext(tmp, jtext1, id_cliente);
+        enorderJtext(tmp, jtext1, id_cliente);
+        postorderJtext(tmp, jtext1, id_cliente);
+    }
+
+    public static lista ll = new lista();
+
+    public static int nivel = -1;
+
+    public void imprimirNiveles(Node tmp, long id_cliente, JTextField jtext1) {
+        if (tmp.left == null && tmp.right == null) {
+            if (tmp._capas.id_cliente == id_cliente) {
+                nivel = nivel + 1;
+                //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
+                info inf = new info(id_cliente, tmp._capas.id_capa, nivel);
+                ll.insert(inf);
+            }
+
+        } else {
+            if (tmp._capas.id_cliente == id_cliente) {
+                nivel = nivel + 1;
+                //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
+                info inf = new info(id_cliente, tmp._capas.id_capa, nivel);
+                ll.insert(inf);
+            }
+        }
+        if (tmp.left != null) {
+            imprimirNiveles(tmp.left, id_cliente, jtext1);
+            if (tmp._capas.id_cliente == id_cliente) {
+                nivel = 0;
+            }
+        }
+        if (tmp.right != null) {
+            imprimirNiveles(tmp.right, id_cliente, jtext1);
+            if (tmp._capas.id_cliente == id_cliente) {
+                nivel = 0;
+            }
+        }
+    }
+
+    public static String capH = "";
+
+    //CAPAS QUE SON HOJAS
+    public void capasHojas(Node tmp, long id_cliente, JTextField jtext1) {
+        if (tmp.left == null && tmp.right == null) {
+            if (tmp._capas.id_cliente == id_cliente) {
+                capH = capH + tmp._capas.id_capa + " ";
+                jtext1.setText(capH);
+                nivel = nivel + 1;
+                //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);   
+            }
+
+        } else {
+            if (tmp._capas.id_cliente == id_cliente) {
+                nivel = nivel + 1;
+                //System.out.println("nivel " + nivel + " id: " + tmp._capas.id_capa);
+            }
+        }
+        if (tmp.left != null) {
+            capasHojas(tmp.left, id_cliente, jtext1);
+        }
+        if (tmp.right != null) {
+            capasHojas(tmp.right, id_cliente, jtext1);
+        }
+    }
+
 
     /*public void recorridoAmplitud(Node tmp, int capa, Matriz matriz) {
         if (tmp != null) {

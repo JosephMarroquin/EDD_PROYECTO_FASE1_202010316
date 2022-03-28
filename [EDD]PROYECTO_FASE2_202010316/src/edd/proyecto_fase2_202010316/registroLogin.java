@@ -121,7 +121,8 @@ public class registroLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (isNumeric(jTextField1.getText()) == true && login.cliente.existeDPI(Long.parseLong(jTextField1.getText())) == false) {
-            login.cliente.insertar(Long.parseLong(jTextField1.getText()), jTextField2.getText(), jTextField3.getText());
+            Clientes cliente=new Clientes(Long.parseLong(jTextField1.getText()), jTextField2.getText(), jTextField3.getText());
+            login.cliente.insertar(cliente);
             JOptionPane.showMessageDialog(null, "Registrado Correctamente");
             jTextField1.setText("");
             jTextField2.setText("");

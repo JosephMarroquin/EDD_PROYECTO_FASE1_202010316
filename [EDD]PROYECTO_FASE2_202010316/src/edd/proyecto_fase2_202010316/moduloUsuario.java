@@ -77,6 +77,8 @@ public class moduloUsuario extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -235,6 +237,18 @@ public class moduloUsuario extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Reportes");
+
+        jMenuItem5.setText("Ver");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -348,12 +362,17 @@ public class moduloUsuario extends javax.swing.JFrame {
 
     //
     private long id_cliente;
-    
+
+    public long getId_cliente() {
+        return id_cliente;
+    }
 
     public void setId_cliente(long id_cliente) {
         this.id_cliente = id_cliente;
     }
     
+    public static long idREPORTE;
+
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
@@ -536,54 +555,52 @@ public class moduloUsuario extends javax.swing.JFrame {
         //list.mostrar();
         //System.out.println(list.obtenerMayor());
         jTextField1.setText("");
-        bst.contenido="";
-        abb.preorder(abb.root,matriz,id_cliente);
-        abbGraphviz.preordenJtext(abbGraphviz.root,jTextField1,id_cliente);
+        bst.contenido = "";
+        abb.preorder(abb.root, matriz, id_cliente);
+        abbGraphviz.preordenJtext(abbGraphviz.root, jTextField1, id_cliente);
 
-        
         //columna fila color
         //matriz.insertar(1, 1,"#FFCC33");
         //matriz.insertar(5, 2,"#FFCC40");
         //matriz.insertar(1, 3,"#FFCC27");
-        
         matriz.graficar(String.valueOf(id_cliente));
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    public static String ubicacionIMG="";
-    
+    public static String ubicacionIMG = "";
+
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         String ubicacion = "Estructuras\\PREORDEN\\MDF" + id_cliente + ".jpg";
         Image imagen = new ImageIcon(ubicacion).getImage();
         ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
         jLabel1.setIcon(imgIcon);
-        ubicacionIMG=ubicacion;
+        ubicacionIMG = ubicacion;
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         MatrizDispersa matriz = new MatrizDispersa();
         jTextField1.setText("");
-        bst.contenido="";
-        abb.postorder(abb.root,matriz,id_cliente);
-        abbGraphviz.postorderJtext(abbGraphviz.root,jTextField1,id_cliente);
+        bst.contenido = "";
+        abb.postorder(abb.root, matriz, id_cliente);
+        abbGraphviz.postorderJtext(abbGraphviz.root, jTextField1, id_cliente);
         matriz.graficar(String.valueOf(id_cliente));
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         MatrizDispersa matriz = new MatrizDispersa();
         jTextField1.setText("");
-        bst.contenido="";
-        abb.enorder(abb.root,matriz,id_cliente);
-        abbGraphviz.enorderJtext(abbGraphviz.root,jTextField1,id_cliente);
+        bst.contenido = "";
+        abb.enorder(abb.root, matriz, id_cliente);
+        abbGraphviz.enorderJtext(abbGraphviz.root, jTextField1, id_cliente);
         matriz.graficar(String.valueOf(id_cliente));
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        
-        File input=new File(ubicacionIMG);
-        File output=new File(ubicacionIMG);
-        rotate90(input,output,ROTATE_RIGHT);
-        
+
+        File input = new File(ubicacionIMG);
+        File output = new File(ubicacionIMG);
+        rotate90(input, output, ROTATE_RIGHT);
+
         String ubicacion = ubicacionIMG;
         Image imagen = new ImageIcon(ubicacion).getImage();
         ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
@@ -595,7 +612,7 @@ public class moduloUsuario extends javax.swing.JFrame {
         System.out.println("El id ingresado es: " + Integer.valueOf(entradaUsuario));
         //GENERAR IMG POR ID DE IMAGEN
         MatrizDispersa matriz = new MatrizDispersa();
-        avl.porIDimagen(avl.root,id_cliente,Integer.valueOf(entradaUsuario),matriz,abb);
+        avl.porIDimagen(avl.root, id_cliente, Integer.valueOf(entradaUsuario), matriz, abb);
         matriz.graficarPorIMG(String.valueOf(id_cliente));
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -604,7 +621,7 @@ public class moduloUsuario extends javax.swing.JFrame {
         Image imagen = new ImageIcon(ubicacion).getImage();
         ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
         jLabel1.setIcon(imgIcon);
-        ubicacionIMG=ubicacion;
+        ubicacionIMG = ubicacion;
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -612,13 +629,13 @@ public class moduloUsuario extends javax.swing.JFrame {
         Image imagen = new ImageIcon(ubicacion).getImage();
         ImageIcon imgIcon = new ImageIcon(imagen.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH));
         jLabel1.setIcon(imgIcon);
-        ubicacionIMG=ubicacion;
+        ubicacionIMG = ubicacion;
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         MatrizDispersa matriz = new MatrizDispersa();
         String entradaUsuario = JOptionPane.showInputDialog("Ingrese el numero total de capas a evaluar:");
-        for(int i=0;i<Integer.valueOf(entradaUsuario);i++){
+        for (int i = 0; i < Integer.valueOf(entradaUsuario); i++) {
             String numeroCapa = JOptionPane.showInputDialog("Ingrese el id de la capa:");
             abb.bstIngresoCapa(abb.root, matriz, id_cliente, Integer.valueOf(numeroCapa));
         }
@@ -639,41 +656,47 @@ public class moduloUsuario extends javax.swing.JFrame {
         jLabel2.setIcon(imgIcon);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    
-    public static final int ROTATE_LEFT=1;
-    public static final int ROTATE_RIGHT=-1;
-    
-    public void rotate90(File input, File output, int direction){
-        try{
-            ImageInputStream iis=ImageIO.createImageInputStream(input);
-            Iterator<ImageReader> iterartor=ImageIO.getImageReaders(iis);
-            ImageReader reader=iterartor.next();
-            String format=reader.getFormatName();
-            
-            BufferedImage image=ImageIO.read(iis);
-            int width=image.getWidth();
-            int height=image.getHeight();
-            
-            BufferedImage rotated=new BufferedImage(height, width, image.getType());
-            
-            for(int y=0; y<height;y++){
-                for(int x=0;x<width;x++){
-                    switch(direction){
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        idREPORTE=id_cliente;
+        reportesUsuario mu = new reportesUsuario();
+        mu.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    public static final int ROTATE_LEFT = 1;
+    public static final int ROTATE_RIGHT = -1;
+
+    public void rotate90(File input, File output, int direction) {
+        try {
+            ImageInputStream iis = ImageIO.createImageInputStream(input);
+            Iterator<ImageReader> iterartor = ImageIO.getImageReaders(iis);
+            ImageReader reader = iterartor.next();
+            String format = reader.getFormatName();
+
+            BufferedImage image = ImageIO.read(iis);
+            int width = image.getWidth();
+            int height = image.getHeight();
+
+            BufferedImage rotated = new BufferedImage(height, width, image.getType());
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    switch (direction) {
                         case ROTATE_LEFT:
-                            rotated.setRGB(y, (width-1)-x, image.getRGB(x, y));
+                            rotated.setRGB(y, (width - 1) - x, image.getRGB(x, y));
                             break;
                         case ROTATE_RIGHT:
-                            rotated.setRGB((height-1)-y, x, image.getRGB(x, y));
+                            rotated.setRGB((height - 1) - y, x, image.getRGB(x, y));
                             break;
                     }
                 }
             }
-            
+
             ImageIO.write(rotated, format, output);
-            
-        }catch(Exception e){}
+
+        } catch (Exception e) {
+        }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -730,11 +753,13 @@ public class moduloUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 

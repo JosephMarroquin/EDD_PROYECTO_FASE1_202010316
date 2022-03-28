@@ -10,10 +10,12 @@ package ABB;
  * @author josep
  */
 public class info {
+    long id_cliente;
     int id_capa;
     int nivel;
     
-    public info(int id_capa, int nivel){
+    public info(long id_cliente,int id_capa, int nivel){
+        this.id_cliente=id_cliente;
         this.id_capa=id_capa;
         this.nivel=nivel;
     }

@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import ABB.*;
 import Matriz.*;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -205,7 +207,7 @@ public class AVL {
     }
 
     //GRAFICAR POR ID DE LA IMAGEN
-    public void porIDimagen(NodeAVL tmp, long id_cliente, int id_imagen, MatrizDispersa matriz,bst abb) {
+    public void porIDimagen(NodeAVL tmp, long id_cliente, int id_imagen, MatrizDispersa matriz, bst abb) {
         if (tmp != null) {
             if (id_cliente == tmp._imagen.id_cliente && id_imagen == tmp._imagen.id_imagen) {
                 String patron = "\\d+";
@@ -219,9 +221,30 @@ public class AVL {
                 }
                 //System.out.print(tmp._imagen.id_imagen + " ");
             }
-            porIDimagen(tmp.left, id_cliente, id_imagen,matriz,abb);
-            porIDimagen(tmp.right, id_cliente, id_imagen,matriz,abb);
+            porIDimagen(tmp.left, id_cliente, id_imagen, matriz, abb);
+            porIDimagen(tmp.right, id_cliente, id_imagen, matriz, abb);
         }
     }
+
+    public static listaTop lt=new listaTop();
+
+    //TOP 5 IMAGENES CON MAS NUMEROS DE CAPAS
+    public void top5IMG(NodeAVL tmp, long id_cliente, DefaultTableModel tblModel) {
+        if (tmp != null) {
+            if (id_cliente == tmp._imagen.id_cliente) {
+                System.out.println(tmp._imagen.id_imagen);
+                imagen ii=new imagen(tmp._imagen.id_cliente,tmp._imagen.id_imagen,tmp._imagen.capa);
+                lt.InsertarClienteAtendido(ii);
+                /*obtenerMayor(tmp,id_cliente);
+                String idimg = String.valueOf(idMayor);
+                String[] clienteTabla = {idimg};
+                tblModel.addRow(clienteTabla);
+                cont5 = cont5 + 1;*/
+            }
+            top5IMG(tmp.left, id_cliente, tblModel);
+            top5IMG(tmp.right, id_cliente, tblModel);
+        }
+    }
+
 
 }
