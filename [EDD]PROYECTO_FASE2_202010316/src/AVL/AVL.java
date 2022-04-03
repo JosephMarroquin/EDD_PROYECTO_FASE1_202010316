@@ -183,7 +183,7 @@ public class AVL {
     private String getCodigoGraphviz(NodeAVL tmp) {
         return "digraph grafica{\n"
                 + "rankdir=TB;\n"
-                + "node [shape = record, style=filled, fillcolor=seashell2];\n"
+                + "node [shape = circle, style=filled, fillcolor=seashell2];\n"
                 + getCodigoInterno(tmp)
                 + "}\n";
     }
@@ -193,15 +193,15 @@ public class AVL {
         if (tmp.left == null && tmp.right == null) {
             etiqueta = "nodo" + tmp.id + " [ label =\"" + tmp._imagen.id_imagen + "\"];\n";
         } else {
-            etiqueta = "nodo" + tmp.id + " [ label =\"<C0>|" + tmp._imagen.id_imagen + "|<C1>\"];\n";
+            etiqueta = "nodo" + tmp.id + " [ label =\"" + tmp._imagen.id_imagen + "\"];\n";
         }
         if (tmp.left != null) {
             etiqueta = etiqueta + getCodigoInterno(tmp.left)
-                    + "nodo" + tmp.id + ":C0->nodo" + tmp.left.id + "\n";
+                    + "nodo" + tmp.id + "->nodo" + tmp.left.id + "\n";
         }
         if (tmp.right != null) {
             etiqueta = etiqueta + getCodigoInterno(tmp.right)
-                    + "nodo" + tmp.id + ":C1->nodo" + tmp.right.id + "\n";
+                    + "nodo" + tmp.id + "->nodo" + tmp.right.id + "\n";
         }
         return etiqueta;
     }
