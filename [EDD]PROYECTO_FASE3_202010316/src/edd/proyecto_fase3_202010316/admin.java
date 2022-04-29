@@ -51,6 +51,7 @@ public class admin extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -92,6 +93,14 @@ public class admin extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem5);
+
+        jMenuItem6.setText("Cargar Rutas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
 
@@ -300,6 +309,54 @@ public class admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
+
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "[";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                data+="]";
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    JSONArray array2 = (JSONArray) jobj.get("Grafo");
+                    JSONObject obj2;
+                    for (int j = 0; j < array2.size(); j++) {
+                        obj2 = (JSONObject) array2.get(j);
+                        System.out.println("-----------------------------------");
+
+                        String inicio = String.valueOf(obj2.get("inicio"));
+                        String finall = String.valueOf(obj2.get("final"));
+                        String peso = String.valueOf(obj2.get("peso"));
+
+                        System.out.println("inicio " + inicio);
+                        System.out.println("final " + finall);
+                        System.out.println("peso " + peso);
+
+                        System.out.println("-----------------------------------");
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -347,6 +404,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
