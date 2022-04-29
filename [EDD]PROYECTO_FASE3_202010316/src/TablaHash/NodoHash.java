@@ -18,8 +18,9 @@ public class NodoHash {
     public String genero;
     public String telefono;
     public String direccion;
+    public char estado;
 
-    public NodoHash(long dpi, String nombres, String apellidos, String tipo_licencia, String genero, String telefono, String direcion) {
+    public NodoHash(long dpi, String nombres, String apellidos, String tipo_licencia, String genero, String telefono, String direccion) {
         this.dpi = dpi;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -85,5 +86,12 @@ public class NodoHash {
         this.direccion = direccion;
     }
     
+    public char getEstado() {
+        return estado;
+    }
+
+    public void setEstado(char estado) {
+        this.estado = estado;
+    }
 
 }

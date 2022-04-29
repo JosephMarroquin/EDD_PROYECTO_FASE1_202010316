@@ -14,11 +14,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import TablaHash.*;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author josep
  */
 public class admin extends javax.swing.JFrame {
+    
+    TablaHash tablah=new TablaHash();
 
     /**
      * Creates new form admin
@@ -36,14 +43,28 @@ public class admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Ver Tabla Hash");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(jLabel1);
 
         jMenu1.setText("File");
 
@@ -65,6 +86,18 @@ public class admin extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu3.setText("Reportes");
+
+        jMenuItem4.setText("Graficar Tabla Hash");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu3);
+
         jMenu2.setText("Perfil");
 
         jMenuItem1.setText("Cerrar Sesion");
@@ -83,11 +116,23 @@ public class admin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(467, 467, 467)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 630, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 392, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -144,8 +189,57 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
+
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    System.out.println("-----------------------------------");
+
+                    String dpi = String.valueOf(jobj.get("dpi"));
+                    String nombres = String.valueOf(jobj.get("nombres"));
+                    String apellidos = String.valueOf(jobj.get("apellidos"));
+                    String tipo_licencia = String.valueOf(jobj.get("tipo_licencia"));
+                    String genero = String.valueOf(jobj.get("genero"));
+                    String telefono = String.valueOf(jobj.get("telefono"));
+                    String direccion = String.valueOf(jobj.get("direccion"));
+
+                    tablah.insertar(Long.parseLong(dpi), nombres, apellidos,tipo_licencia, genero, telefono, direccion);
+
+                    System.out.println("-----------------------------------");
+                }
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        tablah.generarDotTablaHash();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String ubicacion = "Estructuras\\TablaHash\\HashTable.png";
+        Image imagen = new ImageIcon(ubicacion).getImage();
+        ImageIcon imgIcon = new ImageIcon(imagen);
+        jLabel1.setIcon(imgIcon);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,11 +277,16 @@ public class admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
