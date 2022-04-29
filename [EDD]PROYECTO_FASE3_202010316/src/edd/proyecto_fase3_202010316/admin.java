@@ -24,8 +24,8 @@ import javax.swing.ImageIcon;
  * @author josep
  */
 public class admin extends javax.swing.JFrame {
-    
-    TablaHash tablah=new TablaHash();
+
+    TablaHash tablah = new TablaHash();
 
     /**
      * Creates new form admin
@@ -50,6 +50,7 @@ public class admin extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -83,6 +84,14 @@ public class admin extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem5.setText("Cargar Lugares");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
 
@@ -139,7 +148,7 @@ public class admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        login log=new login();
+        login log = new login();
         log.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -178,7 +187,7 @@ public class admin extends javax.swing.JFrame {
                     String municipio = String.valueOf(jobj.get("direccion"));
                     String id_municipio = String.valueOf(jobj.get("id_municipio"));
 
-                    Clientes clienteAdmin = new Clientes(Long.parseLong(dpi), nombre_cliente, usuario,correo, contraseña, telefono, municipio, Integer.parseInt(id_municipio));
+                    Clientes clienteAdmin = new Clientes(Long.parseLong(dpi), nombre_cliente, usuario, correo, contraseña, telefono, municipio, Integer.parseInt(id_municipio));
                     login.cliente.insertar(clienteAdmin);
 
                     System.out.println("-----------------------------------");
@@ -221,7 +230,7 @@ public class admin extends javax.swing.JFrame {
                     String telefono = String.valueOf(jobj.get("telefono"));
                     String direccion = String.valueOf(jobj.get("direccion"));
 
-                    tablah.insertar(Long.parseLong(dpi), nombres, apellidos,tipo_licencia, genero, telefono, direccion);
+                    tablah.insertar(Long.parseLong(dpi), nombres, apellidos, tipo_licencia, genero, telefono, direccion);
 
                     System.out.println("-----------------------------------");
                 }
@@ -240,6 +249,56 @@ public class admin extends javax.swing.JFrame {
         ImageIcon imgIcon = new ImageIcon(imagen);
         jLabel1.setIcon(imgIcon);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        try {
+            Gson json = new Gson();
+            JFileChooser selector = new JFileChooser();
+            File file;
+            selector.setMultiSelectionEnabled(false);
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter(null, "json");
+            selector.setFileFilter(filtro);
+
+            if (selector.showDialog(null, null) == JFileChooser.APPROVE_OPTION) {
+                file = selector.getSelectedFile();
+
+                Scanner sc = new Scanner(file);
+                String data = "[";
+                while (sc.hasNextLine()) {
+                    data += sc.nextLine() + "\n";
+                }
+                data+="]";
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(data);
+                JSONArray array = (JSONArray) obj;
+                JSONObject jobj;
+
+                for (int i = 0; i < array.size(); i++) {
+                    jobj = (JSONObject) array.get(i);
+                    JSONArray array2 = (JSONArray) jobj.get("Lugares");
+                    JSONObject obj2;
+                    for (int j = 0; j < array2.size(); j++) {
+                        obj2 = (JSONObject) array2.get(j);
+                        System.out.println("-----------------------------------");
+
+                        String id = String.valueOf(obj2.get("id"));
+                        String departamento = String.valueOf(obj2.get("departamento"));
+                        String nombre = String.valueOf(obj2.get("nombre"));
+                        String sn_sucursal = String.valueOf(obj2.get("sn_sucursal"));
+
+                        System.out.println("id " + id);
+                        System.out.println("departamento " + departamento);
+                        System.out.println("nombre " + nombre);
+                        System.out.println("sn_sucursal " + sn_sucursal);
+
+                        System.out.println("-----------------------------------");
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,6 +346,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
