@@ -6,12 +6,15 @@
 package Grafo;
 
 import edd.proyecto_fase3_202010316.*;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 /**
  *
  * @author josep
  */
 public class ListaRutas {
+
     private Nodo inicioCola, finalCola;
 
     public class Nodo {
@@ -55,7 +58,7 @@ public class ListaRutas {
         }
 
     }
-    
+
     //Mostar contenido de la lista
     public void Mostrar_Rutas() {
         Nodo recorrido = inicioCola;
@@ -67,13 +70,63 @@ public class ListaRutas {
             recorrido = recorrido.siguiente;
         }
     }
-    
+
     //Agregar conexiones a la lista de adyacencia
     public void conexiones_listAD() {
         Nodo recorrido = inicioCola;
         while (recorrido != null) {
             admin.miLista.conexion(recorrido.dataRutas.inicio, recorrido.dataRutas.finall);
             recorrido = recorrido.siguiente;
+        }
+    }
+
+    //Graficar grafo de rutas
+    public void generarGrafoRutas() {
+        Nodo recorrido = inicioCola;
+        FileWriter fw = null;
+        PrintWriter pw = null;
+        try {
+            fw = new FileWriter("Estructuras\\Grafo\\grafo.dot");
+            pw = new PrintWriter(fw);
+            pw.println("digraph G{ rankdir=LR;");
+            //Contenido grafo de rutas
+            while (recorrido != null) {
+                pw.println(recorrido.dataRutas.inicio+"->"+recorrido.dataRutas.finall+"[label=\""+recorrido.dataRutas.peso+"\"]");
+                recorrido = recorrido.siguiente;
+            }
+
+            pw.println("}");
+
+            try {
+                String doPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+                String fileInputPath = "Estructuras\\Grafo\\grafo.dot";
+                String fileOutPath = "Estructuras\\Grafo\\grafo.png";
+                String tParam = "-Tpng";
+                String toParam = "-o";
+                String[] cmd = new String[5];
+                cmd[0] = doPath;
+                cmd[1] = tParam;
+                cmd[2] = fileInputPath;
+                cmd[3] = toParam;
+                cmd[4] = fileOutPath;
+                Runtime rt = Runtime.getRuntime();
+                rt.exec(cmd);
+                //rt.exec("HashTable.png");
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (null != fw) {
+                    fw.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
     }
 
