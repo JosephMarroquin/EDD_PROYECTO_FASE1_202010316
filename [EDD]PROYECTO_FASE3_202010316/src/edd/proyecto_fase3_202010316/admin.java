@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import Grafo.*;
 import TablaHash.*;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -25,8 +26,8 @@ import javax.swing.ImageIcon;
  */
 public class admin extends javax.swing.JFrame {
 
-    TablaHash tablah = new TablaHash();
-
+    public static TablaHash tablah = new TablaHash();
+    
     /**
      * Creates new form admin
      */
@@ -54,6 +55,7 @@ public class admin extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -113,6 +115,14 @@ public class admin extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem4);
+
+        jMenuItem7.setText("Graficar Lista de Adyacencia");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
 
@@ -357,6 +367,18 @@ public class admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        /*Grafo g=new Grafo(21474836);
+        g.insertaArista(2, 4, 2);
+        g.insertaArista(3, 1, 2);
+        g.insertaArista(4, 1, 2);
+        g.insertaArista(44, 2, 2);
+        g.insertaArista(93, 2, 2);
+        g.insertaArista(1, 1, 2);
+        g.insertaArista(2, 2, 2);
+        g.mostrarGrafo();*/
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -405,6 +427,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
