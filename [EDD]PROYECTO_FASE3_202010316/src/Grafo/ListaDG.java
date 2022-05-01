@@ -10,7 +10,7 @@ package Grafo;
  * @author josep
  */
 public class ListaDG {
-    //Clase para realizar las conexiones entre los nodos
+     //Clase para realizar las conexiones entre los nodos
     private class ENodo {
 
         int ivex;//posicion del nodo conectado
@@ -26,6 +26,7 @@ public class ListaDG {
     //Vector de la lista de adyacencia
     private class VNodo {
 
+        String data;//valor del nodo
         ENodo inicio = null;//inicio de la sublista enlazada
 
         //metodo de insertar en la sublista
@@ -70,6 +71,7 @@ public class ListaDG {
     //insertar nodos en el grafo
     public void insert(String valor, int pos) {
         if (pos >= 0 && pos < v.length) {
+            v[pos].data = valor;
             v[pos].inicio = null;
         }
     }
@@ -84,7 +86,10 @@ public class ListaDG {
     //imprimir la lsita de adyacencia del grafo
     public void imprimir() {
         for (int i = 0; i < v.length; i++) {
-            System.out.print(i);
+            if(v[i].data==null){
+                continue;
+            }
+            System.out.print("["+v[i].data+"]");
             v[i].imprimir();
             System.out.println("");
         }

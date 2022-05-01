@@ -5,6 +5,8 @@
  */
 package Grafo;
 
+import edd.proyecto_fase3_202010316.*;
+
 import javax.swing.JTextField;
 
 /**
@@ -65,6 +67,15 @@ public class ListaLugares {
             System.out.println(recorrido.dataLugares.departamento);
             System.out.println(recorrido.dataLugares.nombre);
             System.out.println(recorrido.dataLugares.sn_sucursal);
+            recorrido = recorrido.siguiente;
+        }
+    }
+    
+    //Insertar en lista de adyacencia
+    public void inserta_lad() {
+        Nodo recorrido = inicioCola;
+        while (recorrido != null) {
+            admin.miLista.insert(String.valueOf(recorrido.dataLugares.id), recorrido.dataLugares.id);
             recorrido = recorrido.siguiente;
         }
     }

@@ -5,6 +5,8 @@
  */
 package Grafo;
 
+import edd.proyecto_fase3_202010316.*;
+
 /**
  *
  * @author josep
@@ -62,6 +64,15 @@ public class ListaRutas {
             System.out.println(recorrido.dataRutas.inicio);
             System.out.println(recorrido.dataRutas.finall);
             System.out.println(recorrido.dataRutas.peso);
+            recorrido = recorrido.siguiente;
+        }
+    }
+    
+    //Agregar conexiones a la lista de adyacencia
+    public void conexiones_listAD() {
+        Nodo recorrido = inicioCola;
+        while (recorrido != null) {
+            admin.miLista.conexion(recorrido.dataRutas.inicio, recorrido.dataRutas.finall);
             recorrido = recorrido.siguiente;
         }
     }

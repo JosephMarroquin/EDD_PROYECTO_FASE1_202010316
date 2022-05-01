@@ -27,6 +27,9 @@ import javax.swing.ImageIcon;
 public class admin extends javax.swing.JFrame {
 
     public static TablaHash tablah = new TablaHash();
+    public static ListaDG miLista=new ListaDG(999999);
+    public static ListaLugares lista_lugar=new ListaLugares();
+    public static ListaRutas lista_rutas=new ListaRutas();
     
     /**
      * Creates new form admin
@@ -304,16 +307,20 @@ public class admin extends javax.swing.JFrame {
                         String departamento = String.valueOf(obj2.get("departamento"));
                         String nombre = String.valueOf(obj2.get("nombre"));
                         String sn_sucursal = String.valueOf(obj2.get("sn_sucursal"));
+                        
+                        Lugares lug=new Lugares(Integer.parseInt(id),departamento,nombre,sn_sucursal);
+                        lista_lugar.insertar(lug);
 
-                        System.out.println("id " + id);
+                        /*System.out.println("id " + id);
                         System.out.println("departamento " + departamento);
                         System.out.println("nombre " + nombre);
-                        System.out.println("sn_sucursal " + sn_sucursal);
+                        System.out.println("sn_sucursal " + sn_sucursal);*/
 
                         System.out.println("-----------------------------------");
                     }
 
                 }
+                lista_lugar.inserta_lad();
             }
         } catch (Exception e) {
         }
@@ -353,30 +360,26 @@ public class admin extends javax.swing.JFrame {
                         String inicio = String.valueOf(obj2.get("inicio"));
                         String finall = String.valueOf(obj2.get("final"));
                         String peso = String.valueOf(obj2.get("peso"));
+                        
+                        Rutas rut=new Rutas(Integer.parseInt(inicio),Integer.parseInt(finall),Integer.parseInt(peso));
+                        lista_rutas.insertar(rut);
 
-                        System.out.println("inicio " + inicio);
+                        /*System.out.println("inicio " + inicio);
                         System.out.println("final " + finall);
-                        System.out.println("peso " + peso);
+                        System.out.println("peso " + peso);*/
 
                         System.out.println("-----------------------------------");
                     }
 
                 }
+                lista_rutas.conexiones_listAD();
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        /*Grafo g=new Grafo(21474836);
-        g.insertaArista(2, 4, 2);
-        g.insertaArista(3, 1, 2);
-        g.insertaArista(4, 1, 2);
-        g.insertaArista(44, 2, 2);
-        g.insertaArista(93, 2, 2);
-        g.insertaArista(1, 1, 2);
-        g.insertaArista(2, 2, 2);
-        g.mostrarGrafo();*/
+        miLista.imprimir();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
