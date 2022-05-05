@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 public class login extends javax.swing.JFrame {
     
     public static lista cliente = new lista();
+    public static int difficulty=4;
 
     /**
      * Creates new form login
