@@ -7,6 +7,7 @@ package TablaHash;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -174,5 +175,14 @@ public class TablaHash {
                 e2.printStackTrace();
             }
         }
+    }
+    
+    //DPI MENSAJERO
+    public void agregarDPI(JComboBox combox) {
+       for (int i = 0; i < vectorHash.length; i++) {
+                if (vectorHash[i] != null) {
+                    combox.addItem(vectorHash[i].dpi);
+                }
+            }
     }
 }

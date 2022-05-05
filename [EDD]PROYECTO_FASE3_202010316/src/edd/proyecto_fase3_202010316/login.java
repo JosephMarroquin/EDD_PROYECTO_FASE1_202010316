@@ -111,6 +111,7 @@ public class login extends javax.swing.JFrame {
             this.dispose();
         } else if (cliente.verificarLogin(jTextField1.getText(), jPasswordField1.getText()) == true) {
             moduloUsuario mu = new moduloUsuario();
+            mu.setId_cliente(jTextField1.getText());
             mu.setVisible(true);
             this.dispose();
         } else {
